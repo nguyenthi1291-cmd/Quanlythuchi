@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trung Tâm Tra Cứu Chứng Từ & Báo Cáo Chuyên Sâu — Hồng Ngọc Hà</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F4F3EE;
+      --surface: #FFFFFF;
+      --surface-sub: #FAF9F5;
+      --sunk: #EFECE4;
+      --ink: #1B1814;
+      --ink-soft: #38342E;
+      --muted: #6E685E;
+      --line: #E2DDD3;
+      --line-light: #ECE8E0;
+      
+      --gold: #8E6516;
+      --gold-soft: #F6EEDC;
+      --gold-glow: rgba(142, 101, 22, 0.15);
+      
+      --son: #A3322A;
+      --son-soft: #FCECE9;
+      --son-border: #E8B4AF;
+      
+      --fnb: #266856;
+      --fnb-soft: #E5F3EE;
+      --fnb-border: #A6D4C5;
+      
+      --vp: #475569;
+      --vp-soft: #EBF0F5;
+      --vp-border: #CBD5E1;
+      
+      --good: #1E7E4B;
+      --good-soft: #E3F5EC;
+      --warn: #B45309;
+      --warn-soft: #FEF3C7;
+      --bad: #BE123C;
+      --bad-soft: #FFE4E6;
+      --blue: #1D4ED8;
+      --blue-soft: #EFF6FF;
+
+      --font-display: "Lora", Georgia, "Times New Roman", serif;
+      --font-body: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-sm: 0 1px 3px rgba(27,24,20,0.05);
+      --shadow-md: 0 4px 14px rgba(27,24,20,0.06), 0 1px 3px rgba(27,24,20,0.04);
+      --shadow-lg: 0 12px 28px rgba(27,24,20,0.09), 0 4px 10px rgba(27,24,20,0.04);
+    }
+
+    [data-theme="dark"] {
+      --bg: #12100E;
+      --surface: #1B1815;
+      --surface-sub: #171412;
+      --sunk: #24201C;
+      --ink: #F2EDE4;
+      --ink-soft: #DDD6CA;
+      --muted: #A39B8E;
+      --line: #332E27;
+      --line-light: #28241F;
+      
+      --gold: #DDA843;
+      --gold-soft: #382D16;
+      --gold-glow: rgba(221, 168, 67, 0.2);
+      
+      --son: #E56E63;
+      --son-soft: #3B1B18;
+      --son-border: #622C26;
+      
+      --fnb: #52BFA1;
+      --fnb-soft: #143228;
+      --fnb-border: #1F5444;
+      
+      --vp: #93A6BA;
+      --vp-soft: #1E2732;
+      --vp-border: #334155;
+      
+      --good: #4ADE80;
+      --good-soft: #143521;
+      --warn: #FBBF24;
+      --warn-soft: #3B2E10;
+      --bad: #FB7185;
+      --bad-soft: #3B151C;
+      --blue: #60A5FA;
+      --blue-soft: #172554;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.5);
+      --shadow-lg: 0 12px 28px rgba(0,0,0,0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 15px; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav Bar */
+    header.portal-nav {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(244, 243, 238, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    [data-theme="dark"] header.portal-nav { background: rgba(18, 16, 14, 0.94); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 16px;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--gold), #5A3E09);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 19px;
+      font-family: var(--font-display);
+      box-shadow: 0 4px 12px var(--gold-glow);
+    }
+
+    .brand-title h1 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+    .brand-title span {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 7px 11px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); background: var(--sunk); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px var(--gold-glow);
+    }
+    .btn-primary:hover { background: #775310; }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover { background: var(--sunk); }
+
+    .btn-icon {
+      padding: 8px;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-gold { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(142, 101, 22, 0.2); }
+    .badge-son { background: var(--son-soft); color: var(--son); border: 1px solid var(--son-border); }
+    .badge-fnb { background: var(--fnb-soft); color: var(--fnb); border: 1px solid var(--fnb-border); }
+    .badge-vp  { background: var(--vp-soft); color: var(--vp); border: 1px solid var(--vp-border); }
+    .badge-good { background: var(--good-soft); color: var(--good); }
+    .badge-warn { background: var(--warn-soft); color: var(--warn); }
+    .badge-bad { background: var(--bad-soft); color: var(--bad); }
+
+    /* Page Header Banner */
+    .page-hero {
+      padding: 36px 0 28px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .page-hero-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .page-hero h2 {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .page-hero p {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .strip-kpis {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+    .strip-kpi-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .strip-kpi-item span {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .strip-kpi-item b {
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Section title */
+    .section-title-wrap {
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .section-subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Table Explorer */
+    .data-explorer-section { margin-bottom: 50px; }
+    .table-container {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .table-toolbar {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-sub);
+    }
+    .search-input-wrap {
+      position: relative;
+      min-width: 260px;
+      flex-grow: 1;
+      max-width: 400px;
+    }
+    .search-input-wrap input {
+      width: 100%;
+      padding: 9px 12px 9px 36px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      background: var(--surface);
+      color: var(--ink);
+    }
+    .search-input-wrap svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      fill: var(--muted);
+    }
+    .table-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .table-filters select {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      background: var(--surface);
+      color: var(--ink);
+    }
+    .scroll-table-wrapper {
+      max-height: 540px;
+      overflow-y: auto;
+      overflow-x: auto;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: left;
+    }
+    table.data-table th {
+      position: sticky;
+      top: 0;
+      background: var(--sunk);
+      padding: 11px 14px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      font-weight: 700;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+      z-index: 2;
+    }
+    table.data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line-light);
+      vertical-align: middle;
+    }
+    table.data-table tr:hover td { background: var(--surface-sub); }
+    table.data-table td.money {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Radar & Costs */
+    .alerts-section { margin-bottom: 50px; }
+    .alerts-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .alerts-grid { grid-template-columns: 1fr; } }
+    .card-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card-box h4 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .alert-item-list { display: flex; flex-direction: column; gap: 10px; }
+    .alert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: var(--surface-sub);
+      border: 1px solid var(--line-light);
+    }
+    .alert-item-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+    .alert-item-content { flex-grow: 1; }
+    .alert-item-title { font-size: 0.86rem; font-weight: 600; color: var(--ink); }
+    .alert-item-desc { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    .bar-group { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+    .bar-row { display: flex; flex-direction: column; gap: 6px; }
+    .bar-info { display: flex; justify-content: space-between; font-size: 0.84rem; font-weight: 600; }
+    .progress-track {
+      height: 10px;
+      background: var(--sunk);
+      border-radius: 99px;
+      overflow: hidden;
+      display: flex;
+    }
+    .progress-fill { height: 100%; border-radius: 99px; transition: width 0.6s ease; }
+    /* SOP */
+    .sop-section { margin-bottom: 50px; }
+    .sop-stepper {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 990px) { .sop-stepper { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 580px) { .sop-stepper { grid-template-columns: 1fr; } }
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 18px 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gold-soft);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .step-card h5 { font-size: 0.92rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .step-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .step-tag { margin-top: 14px; font-size: 0.72rem; font-weight: 600; color: var(--gold); }
+
+    /* Specs */
+    .specs-section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      margin-bottom: 50px;
+      box-shadow: var(--shadow-sm);
+    }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 20px;
+    }
+    @media (max-width: 860px) { .specs-grid { grid-template-columns: 1fr; } }
+    .code-box {
+      background: var(--sunk);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size: 0.8rem;
+      color: var(--ink);
+      overflow-x: auto;
+      max-height: 280px;
+    }
+    .pillar-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    /* Footer */
+    footer.portal-footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface);
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="portal-nav">
+    <div class="container nav-inner">
+      <a href="landing.html" class="brand-block" title="Quay lại Cổng Điều Hành">
+        <div class="brand-mark">HN</div>
+        <div class="brand-title">
+          <h1>Hồng Ngọc Hà · Tra Cứu &amp; Báo Cáo</h1>
+          <span>Trung Tâm Kiểm Soát &amp; Chứng Từ Chi Tiết</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#explorer" style="color:var(--gold);font-weight:700">🔍 Tra Cứu Giao Dịch</a></li>
+          <li><a href="#alerts">🚨 Radar Rủi Ro</a></li>
+          <li><a href="#costs">📊 Cơ Cấu Chi Phí</a></li>
+          <li><a href="#sop">Quy Trình SOP</a></li>
+          <li><a href="#specs">Kiến Trúc Cloud</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-icon" id="themeToggle" title="Đổi giao diện Sáng / Tối">🌓</button>
+        <a href="landing.html" class="btn btn-primary" title="Về trang nhập liệu & điều hành">
+          🏠 Cổng Điều Hành
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Page Hero Banner -->
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <div>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
+            <span class="badge badge-gold">Trang Báo Cáo &amp; Tra Cứu Chuyên Sâu</span>
+            <span class="badge" style="background:var(--sunk);color:var(--ink)">Dữ liệu đồng bộ Realtime</span>
+          </div>
+          <h2>Kiểm Soát Chứng Từ, Rủi Ro &amp; Báo Cáo Hoạt Động</h2>
+          <p>
+            Trang chuyên biệt hỗ trợ tra cứu toàn bộ 78 giao dịch lịch sử, phân tích cơ cấu chi phí, giám sát rủi ro công nợ/ngân hàng và chuẩn hóa quy trình vận hành theo tài liệu SPEC.md.
+          </p>
+        </div>
+
+        <div class="strip-kpis">
+          <div class="strip-kpi-item">
+            <span>Tổng Thu</span>
+            <b style="color:var(--gold)" id="stripThu">418.643.343 ₫</b>
+          </div>
+          <div class="strip-kpi-item">
+            <span>Tổng Chi</span>
+            <b style="color:var(--bad)" id="stripChi">162.971.166 ₫</b>
+          </div>
+          <div class="strip-kpi-item">
+            <span>Dòng Tiền Ròng</span>
+            <b class="color-good" id="stripNet">+255.672.177 ₫</b>
+          </div>
+          <div class="strip-kpi-item">
+            <span>Tổng Chứng Từ</span>
+            <b id="stripCount">78</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: TRUNG TÂM TRA CỨU GIAO DỊCH & CHỨNG TỪ -->
+    <section class="data-explorer-section" id="explorer">
+      <div class="section-title-wrap">
+        <div>
+          <h3 class="section-title">Trung Tâm Tra Cứu Giao Dịch &amp; Chứng Từ</h3>
+          <p class="section-subtitle">Dữ liệu thực tế kết nối từ tập tin Cashflow 360 với toàn bộ chứng từ đã được bóc tách ma trận</p>
+        </div>
+        <div>
+          <button class="btn btn-secondary" onclick="exportDataCSV()">📥 Tải Dữ Liệu Excel (CSV)</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
+            <input type="text" id="txSearch" placeholder="Tìm theo diễn giải, người nộp, số phiếu..." oninput="filterTransactions()">
+          </div>
+
+          <div class="table-filters">
+            <select id="filterSegment" onchange="filterTransactions()">
+              <option value="">Tất cả mảng</option>
+              <option value="F&B">F&amp;B</option>
+              <option value="Sơn Mài">Sơn Mài</option>
+              <option value="Văn phòng">Văn phòng</option>
+            </select>
+
+            <select id="filterType" onchange="filterTransactions()">
+              <option value="">Tất cả nghiệp vụ</option>
+              <option value="Thu">Thu tiền</option>
+              <option value="Chi">Chi tiền</option>
+              <option value="ứng">Tạm ứng / Hoàn ứng</option>
+            </select>
+
+            <select id="filterInvoice" onchange="filterTransactions()">
+              <option value="">Trạng thái HĐ</option>
+              <option value="Đã XHD">Đã xuất HĐ</option>
+              <option value="Chưa XHD">Chưa xuất HĐ</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="scroll-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ngày</th>
+                <th>Loại</th>
+                <th>Số Phiếu</th>
+                <th style="text-align:right">F&amp;B</th>
+                <th style="text-align:right">Sơn Mài</th>
+                <th style="text-align:right">Văn Phòng</th>
+                <th>Hóa Đơn</th>
+                <th>Đối Chiếu Bank</th>
+                <th>Diễn Giải &amp; Ghi Chú</th>
+                <th>Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="txTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: RADAR GIÁM SÁT RỦI RO & CƠ CẤU CHI PHÍ -->
+    <section class="alerts-section" id="alerts">
+      <div class="alerts-grid">
+        <!-- Card 1: Radar Giám Sát Rủi Ro -->
+        <div class="card-box">
+          <h4>
+            <span>🚨 Radar Giám Sát Rủi Ro &amp; Nghiệp Vụ Cần Xử Lý</span>
+            <span class="badge badge-warn" id="alertCountBadge">4 Điểm Cần Chú Ý</span>
+          </h4>
+          
+          <div class="alert-item-list">
+            <div class="alert-item">
+              <div class="alert-item-icon" style="background:var(--warn-soft);color:var(--warn)">🏦</div>
+              <div class="alert-item-content">
+                <div class="alert-item-title" id="alertBankTitle">38 Giao Dịch Chuyển Khoản Chưa Khớp Bank Check</div>
+                <div class="alert-item-desc">Cần đối chiếu sao kê tài khoản MBB / Vietcombank / Sacombank để cập nhật trường đối chiếu tiền về tài khoản.</div>
+              </div>
+              <a href="#explorer" class="badge badge-gold">Xem danh sách</a>
+            </div>
+
+            <div class="alert-item">
+              <div class="alert-item-icon" style="background:var(--blue-soft);color:var(--blue)">📑</div>
+              <div class="alert-item-content">
+                <div class="alert-item-title">Theo Dõi Khoản Tạm Ứng Nhân Viên: Còn Dư 16.545.900 ₫</div>
+                <div class="alert-item-desc">Tổng đã tạm ứng 60.000.000 ₫ (Cô Liên, Chú Thành NVL bếp) · Đã hoàn 43.454.100 ₫. Cần thu hồi chứng từ gốc.</div>
+              </div>
+              <span class="badge badge-vp">Tạm ứng</span>
+            </div>
+
+            <div class="alert-item">
+              <div class="alert-item-icon" style="background:var(--good-soft);color:var(--good)">🧾</div>
+              <div class="alert-item-content">
+                <div class="alert-item-title">Kiểm Soát Xuất Hóa Đơn VAT Sơn Mài</div>
+                <div class="alert-item-desc">Doanh thu kỳ đã được rà soát trạng thái hóa đơn điện tử hợp lệ. Tiếp tục duy trì quy tắc cập nhật số HĐ ngay khi giao hàng.</div>
+              </div>
+              <span class="badge badge-good">Đã kiểm soát</span>
+            </div>
+
+            <div class="alert-item">
+              <div class="alert-item-icon" style="background:var(--son-soft);color:var(--son)">⚖️</div>
+              <div class="alert-item-content">
+                <div class="alert-item-title">Quy Tắc Tránh Tính Trùng Lương Khi Dán Sao Kê MBB</div>
+                <div class="alert-item-desc">Đã thiết lập bộ lọc tự động bỏ chọn các dòng có chứa từ "lương / luong" trong sao kê vì lương đã tính từ Bảng lương.</div>
+              </div>
+              <span class="badge badge-son">An toàn P&L</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Cơ Cấu Chi Phí & Phân Bổ Nguồn Tiền -->
+        <div class="card-box" id="costs">
+          <h4>
+            <span>📊 Cơ Cấu Chi Phí &amp; Phân Bổ Nguồn Tiền</span>
+          </h4>
+
+          <div class="bar-group">
+            <div class="bar-row">
+              <div class="bar-info">
+                <span>F&amp;B Nguyên Vật Liệu &amp; Bếp Ăn</span>
+                <span id="pctFnbCost">66.4% tổng chi</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="fillFnbCost" style="width: 66.4%; background: var(--fnb)"></div>
+              </div>
+            </div>
+
+            <div class="bar-row">
+              <div class="bar-info">
+                <span>Văn Phòng (Mặt bằng, Điện nước, BHXH)</span>
+                <span id="pctVpCost">21.9% tổng chi</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="fillVpCost" style="width: 21.9%; background: var(--vp)"></div>
+              </div>
+            </div>
+
+            <div class="bar-row">
+              <div class="bar-info">
+                <span>Sơn Mài (NVL vỏ trứng, vàng, sơn ta)</span>
+                <span id="pctSmCost">11.7% tổng chi</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="fillSmCost" style="width: 11.7%; background: var(--son)"></div>
+              </div>
+            </div>
+
+            <div class="bar-row" style="margin-top:10px; border-top:1px dashed var(--line); padding-top:12px;">
+              <div class="bar-info">
+                <span>Dòng Tiền Vào Ngân Hàng (Bank)</span>
+                <span id="pctBankIn">61.9% (259.258.054 ₫)</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="fillBankIn" style="width: 61.9%; background: var(--blue)"></div>
+              </div>
+            </div>
+
+            <div class="bar-row">
+              <div class="bar-info">
+                <span>Dòng Tiền Vào Tiền Mặt (Cash)</span>
+                <span id="pctCashIn">38.1% (159.385.289 ₫)</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="fillCashIn" style="width: 38.1%; background: var(--gold)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: QUY TRÌNH CHUẨN VẬN HÀNH NGHIỆP VỤ (SOP) -->
+    <section class="sop-section" id="sop">
+      <div class="section-title-wrap">
+        <div>
+          <h3 class="section-title">Quy Trình Chuẩn Vận Hành Nghiệp Vụ (SOP)</h3>
+          <p class="section-subtitle">5 bước thực hiện mỗi ngày và chốt sổ cuối tháng dành cho kế toán viên &amp; ban quản trị</p>
+        </div>
+      </div>
+
+      <div class="sop-stepper">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h5>Ghi Nhận Doanh Thu Ngày</h5>
+          <p>Nhập số liệu bán hàng KiotViet của F&amp;B và từng món thu tiền bán tranh, workshop Sơn Mài theo cơ sở tiền mặt.</p>
+          <span class="step-tag">Thực hiện: Cuối mỗi ngày</span>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h5>Đối Soát Thu 3 Bên F&amp;B</h5>
+          <p>Áp dụng công thức <code>Chênh lệch = KiotViet − (MBB + Tiền mặt)</code>. Báo cáo ngay nếu có thiếu hụt ca tối.</p>
+          <span class="step-tag">Kiểm soát dòng tiền quầy</span>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h5>Dán Sao Kê MBB Hàng Loạt</h5>
+          <p>Sao chép các dòng chi từ file Excel sao kê ngân hàng MBB, dán vào ô xử lý. Hệ thống tự động gán mảng và lọc bỏ lương.</p>
+          <span class="step-tag">Tự động hóa bóc tách</span>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">4</div>
+          <h5>Lập Bảng Lương Theo Mảng</h5>
+          <p>Nhập Gross và BHXH công ty đóng cho từng nhân sự thuộc 3 mảng. Có nút chép nhanh bảng lương từ tháng trước.</p>
+          <span class="step-tag">Chốt lương ngày 05 hàng tháng</span>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">5</div>
+          <h5>Xuất P&amp;L &amp; Khóa Sổ Tháng</h5>
+          <p>Xem báo cáo hiệu quả P&L, đối chiếu lãi góp từng mảng, chi phí văn phòng và biên lợi nhuận toàn công ty.</p>
+          <span class="step-tag">Báo cáo Ban Giám Đốc</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: KIẾN TRÚC KỸ THUẬT & LỘ TRÌNH NÂNG CẤP CLOUD -->
+    <section class="specs-section" id="specs">
+      <div class="section-title-wrap" style="margin-bottom:0">
+        <div>
+          <h3 class="section-title">Kiến Trúc Kỹ Thuật &amp; Lộ Trình Nâng Cấp Cloud</h3>
+          <p class="section-subtitle">Đặc tả mô hình dữ liệu NoSQL và kế hoạch triển khai cơ sở dữ liệu dùng chung theo tài liệu SPEC.md</p>
+        </div>
+      </div>
+
+      <div class="specs-grid">
+        <div>
+          <h4 style="margin-bottom:10px;font-family:var(--font-display);font-size:1.15rem">Mô Hình 4 Collection Cốt Lõi</h4>
+          <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">
+            Cấu trúc tài liệu NoSQL đã được thiết kế tối ưu, có thể kết nối ngay vào <strong>Supabase (PostgreSQL)</strong> hoặc <strong>Firebase Firestore</strong> để nhiều người dùng chung đồng thời (Kế toán nhập liệu, Giám đốc xem báo cáo).
+          </p>
+          <div class="code-box">
+// 1. txn: Khoản thu & chi lẻ (cơ sở tiền mặt)
+{ id: "t_xxx", kind: "thu"|"chi", seg: "sm"|"fnb"|"vp", 
+  date: "2026-10-09", src: "tm"|"ck", cat: "NVL...", 
+  amount: 15000000, inv: "0000123", invDate: "2026-10-10" }
+
+// 2. fnbday: Đối soát F&B (1 document / ngày)
+{ date: "2026-10-09", kv: 5200000, mbb: 3000000, 
+  cash: 2200000, note: "Khớp ca tối" }
+
+// 3. employees & payroll: Nhân sự & Lương tháng
+{ month: "2026-10", empId: "e_1", seg: "sm", 
+  gross: 11000000, ins: 2365000 }
+          </div>
+        </div>
+
+        <div>
+          <h4 style="margin-bottom:10px;font-family:var(--font-display);font-size:1.15rem">Lộ Trình Nâng Cấp Ưu Tiên (Backlog)</h4>
+          <ul class="pillar-features" style="font-size:0.86rem;gap:12px;margin-top:12px">
+            <li>
+              <span class="badge badge-gold">Ưu tiên 1</span>
+              <span><strong>Thay lớp lưu trữ sang Supabase / Firebase</strong>: Đồng bộ Realtime và phân quyền truy cập Kế toán / Quản lý.</span>
+            </li>
+            <li>
+              <span class="badge badge-fnb">Ưu tiên 2</span>
+              <span><strong>Đọc trực tiếp file Excel (.xlsx) KiotViet &amp; MBB</strong>: Sử dụng thư viện SheetJS để kéo thả tập tin thay vì dán thủ công.</span>
+            </li>
+            <li>
+              <span class="badge badge-son">Ưu tiên 3</span>
+              <span><strong>Tách thuế VAT đầu ra/vào</strong>: Khớp sổ sách kế toán thuế chính thức cho mảng Sơn Mài.</span>
+            </li>
+            <li>
+              <span class="badge badge-vp">Ưu tiên 4</span>
+              <span><strong>Khóa sổ theo kỳ &amp; Nhật ký thay đổi (Audit Log)</strong>: Chặn sửa chứng từ kỳ cũ sau khi kế toán trưởng đã duyệt chốt số liệu.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="container footer-inner">
+      <div>
+        <p style="font-weight:600;color:var(--ink)">© 2026 CTY CP XÂY DỰNG THƯƠNG MẠI DU LỊCH HỒNG NGỌC HÀ</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:2px">Trung Tâm Tra Cứu Chứng Từ &amp; Báo Cáo Chuyên Sâu</p>
+      </div>
+      <div style="display:flex;gap:14px">
+        <a href="landing.html" style="color:var(--gold);font-weight:700;text-decoration:none">🏠 Cổng Điều Hành &amp; Nhập Liệu</a>
+        <span>·</span>
+        <a href="#explorer" style="color:var(--muted);text-decoration:none">Lên đầu trang ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Embedded Initial Data (78 Records)
+    const initialSeed = [
+      {"id": 1, "date": "2026-09-03", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 1652789.0, "bank": 2142500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 2, "date": "2026-09-03", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 794711.0, "bank": 5375160.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26THH 0003123", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 3, "date": "2026-09-03", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 18150000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền chú Giang ứng cho cô Liên và chú Thành để mua NVL bếp", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 4, "date": "2026-09-04", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4062000.0, "bank": 3207500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 5, "date": "2026-09-04", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 588000.0, "bank": 1210000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26THS 00017923", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 6, "date": "2026-09-05", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 9179000.0, "bank": 4994500.0}, "Sơn Mài": {"cash": 0, "bank": 320000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Sacom - đã nhận 7/9", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 7, "date": "2026-09-05", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 1167000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 8, "date": "2026-09-06", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 5003000.0, "bank": 3787500.0}, "Sơn Mài": {"cash": 370000.0, "bank": 2370000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Vietcom - đã nhận 7/9", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 9, "date": "2026-09-06", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 382000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 10, "date": "2026-09-07", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 2880000.0, "bank": 1565000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 11, "date": "2026-09-07", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 452000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 12, "date": "2026-09-08", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 5406000.0, "bank": 5190800.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 13, "date": "2026-09-08", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 844000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 14, "date": "2026-09-09", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4347000.0, "bank": 4069000.0}, "Sơn Mài": {"cash": 316000.0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 15, "date": "2026-09-09", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 867000.0, "bank": 3500000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TGS 60", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 16, "date": "2026-09-09", "voucher": "PC260901\nPC260902", "type": "Cty tạm ứng NV", "alloc": {"F&B": {"cash": 25000000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tạm ứng tiền NVL bếp ăn cho Cô Liên & Chú Thành", "person": "Cô Liên / Chú Thành", "note": "", "invoiceStatus": ""},
+      {"id": 17, "date": "2026-09-10", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4821000.0, "bank": 3633500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 18, "date": "2026-09-10", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 786000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 19, "date": "2026-09-11", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 5779500.0, "bank": 6093500.0}, "Sơn Mài": {"cash": 0, "bank": 67591000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Sacom - đã nhận 4/9", "cashBalance": 0, "bankBalance": 0, "description": "Tiền quầy F&B + Thu tranh Sơn Mài đơn lớn Sacombank", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 20, "date": "2026-09-11", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 0, "bank": 1188000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TTD 00000054", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 21, "date": "2026-09-12", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 3652000.0, "bank": 7490500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 22, "date": "2026-09-12", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 1601000.0, "bank": 6048000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ C26TGS 61", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 23, "date": "2026-09-12", "voucher": "GTT260901\nGTT260902", "type": "NV hoàn ứng Cty", "alloc": {"F&B": {"cash": 16527878.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mua NVL Bếp còn dư của chú Thành và cô Liên tính từ 3/9", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 24, "date": "2026-09-13", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4444000.0, "bank": 5400000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 5000000.0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền quầy sau khi trừ chi phí + 5tr tiền cho thuê MB phòng lạnh", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 25, "date": "2026-09-13", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 426000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 31, "date": "2026-09-16", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 245000.0, "bank": 2507000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 19513400.0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + HĐ 1C26TAA 00029035 + BHXH Văn phòng", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 33, "date": "2026-09-17", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 256400.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 11826000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TLG 132 Sơn Mài", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 36, "date": "2026-09-18", "voucher": "GTT260903\nGTT260904", "type": "NV hoàn ứng Cty", "alloc": {"F&B": {"cash": 4487326.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Hoàn tiền tạm ứng đợt 2", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 43, "date": "2026-09-21", "voucher": "PC260903", "type": "Cty tạm ứng NV", "alloc": {"F&B": {"cash": 15000000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tạm ứng tiền NVL cho cô Liên - bếp phó", "person": "Cô Liên", "note": "", "invoiceStatus": ""},
+      {"id": 50, "date": "2026-09-25", "voucher": "GTT260905\nGTT260906", "type": "NV hoàn ứng Cty", "alloc": {"F&B": {"cash": 5176726.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Hoàn tiền tạm ứng dư", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 59, "date": "2026-09-29", "voucher": "PC260904\nPC260905", "type": "Cty tạm ứng NV", "alloc": {"F&B": {"cash": 20000000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tạm ứng cho cô Liên 15tr, chú Thành 5tr", "person": "Cô Liên / Chú Thành", "note": "", "invoiceStatus": ""},
+      {"id": 64, "date": "2026-09-30", "voucher": "ĐNTT chị Hiền T.09", "type": "Cty hoàn ứng NV", "alloc": {"F&B": {"cash": 17262170.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Chốt số tiền Cty hoàn ứng cho chị Hiền tháng 09", "person": "Chị Hiền", "note": "", "invoiceStatus": ""},
+      {"id": 65, "date": "2026-10-01", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 3736500.0, "bank": 4174000.0}, "Sơn Mài": {"cash": 0, "bank": 13750000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Vietcom - đã nhận 2/10\nTechcom - đã nhận 1/10", "cashBalance": 0, "bankBalance": 0, "description": "Thu tiền F&B + Thu tranh Sơn Mài qua Vietcombank", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 66, "date": "2026-10-01", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 920000.0, "bank": 4331880.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 4637009.0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + NVL + HĐ 1C26THH 0003574 + Tiền điện VP", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 67, "date": "2026-10-02", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 6032000.0, "bank": 6865000.0}, "Sơn Mài": {"cash": 0, "bank": 1500000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "TK chị Thanh", "cashBalance": 0, "bankBalance": 0, "description": "Bàn giao quầy F&B + Khách chuyển khoản cọc tranh Sơn Mài", "person": "", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 69, "date": "2026-10-03", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 3470500.0, "bank": 4305000.0}, "Sơn Mài": {"cash": 1200000.0, "bank": 1840750.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Sacom - đã nhận 5/10", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt - làm workshop Sơn Mài + Thu F&B", "person": "", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 74, "date": "2026-10-05", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 265000.0, "bank": 3455995.0}, "Sơn Mài": {"cash": 0, "bank": 1440637.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TLT 00004641 + KPI Thành SM", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 77, "date": "2026-10-07", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 0, "bank": 4507500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Chuyển khoản tiền bán hàng F&B cuối kỳ", "person": "", "note": "", "invoiceStatus": "Đã XHD"}
+    ];
+
+    // Load LocalStorage to keep real-time sync with landing.html
+    let masterData = JSON.parse(localStorage.getItem("cashflow360_v2") || "null") || initialSeed;
+
+    const num = n => Math.round(n || 0).toLocaleString("vi-VN") + " ₫";
+    const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
+
+    function calculateStats() {
+      let thuTotal = 0, chiTotal = 0;
+      let fbChi = 0, smChi = 0, vpChi = 0;
+      let cashThu = 0, bankThu = 0;
+      let unverifiedBank = 0;
+
+      masterData.forEach(x => {
+        const fbC = x.alloc?.['F&B']?.cash || 0, fbB = x.alloc?.['F&B']?.bank || 0;
+        const smC = x.alloc?.['Sơn Mài']?.cash || 0, smB = x.alloc?.['Sơn Mài']?.bank || 0;
+        const vpC = x.alloc?.['Văn phòng']?.cash || 0, vpB = x.alloc?.['Văn phòng']?.bank || 0;
+
+        const fb = fbC + fbB;
+        const sm = smC + smB;
+        const vp = vpC + vpB;
+
+        if (x.type === 'Thu') {
+          thuTotal += fb + sm + vp;
+          cashThu += fbC + smC + vpC;
+          bankThu += fbB + smB + vpB;
+        } else if (x.type === 'Chi') {
+          chiTotal += fb + sm + vp;
+          fbChi += fb; smChi += sm; vpChi += vp;
+        }
+
+        if ((fbB + smB + vpB) > 0 && !x.bankCheck) unverifiedBank++;
+      });
+
+      const net = thuTotal - chiTotal;
+      document.getElementById("stripThu").textContent = num(thuTotal);
+      document.getElementById("stripChi").textContent = num(chiTotal);
+      document.getElementById("stripNet").textContent = (net >= 0 ? "+" : "") + num(net);
+      document.getElementById("stripCount").textContent = masterData.length;
+
+      // Cost Breakdown
+      if (chiTotal > 0) {
+        const pFb = (fbChi / chiTotal * 100).toFixed(1);
+        const pSm = (smChi / chiTotal * 100).toFixed(1);
+        const pVp = (vpChi / chiTotal * 100).toFixed(1);
+        document.getElementById("pctFnbCost").textContent = `${pFb}% tổng chi`;
+        document.getElementById("fillFnbCost").style.width = `${pFb}%`;
+        document.getElementById("pctSmCost").textContent = `${pSm}% tổng chi`;
+        document.getElementById("fillSmCost").style.width = `${pSm}%`;
+        document.getElementById("pctVpCost").textContent = `${pVp}% tổng chi`;
+        document.getElementById("fillVpCost").style.width = `${pVp}%`;
+      }
+
+      if (thuTotal > 0) {
+        const pBank = (bankThu / thuTotal * 100).toFixed(1);
+        const pCash = (cashThu / thuTotal * 100).toFixed(1);
+        document.getElementById("pctBankIn").textContent = `${pBank}% (${num(bankThu)})`;
+        document.getElementById("fillBankIn").style.width = `${pBank}%`;
+        document.getElementById("pctCashIn").textContent = `${pCash}% (${num(cashThu)})`;
+        document.getElementById("fillCashIn").style.width = `${pCash}%`;
+      }
+
+      document.getElementById("alertBankTitle").textContent = `${unverifiedBank} Giao Dịch Chuyển Khoản Chưa Khớp Bank Check`;
+    }
+
+    // Render Table
+    function renderTransactions(list) {
+      const tbody = document.getElementById("txTableBody");
+      if (!list.length) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:32px;color:var(--muted)">Không tìm thấy giao dịch phù hợp với bộ lọc.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(x => {
+        const fb = (x.alloc?.['F&B']?.cash || 0) + (x.alloc?.['F&B']?.bank || 0);
+        const sm = (x.alloc?.['Sơn Mài']?.cash || 0) + (x.alloc?.['Sơn Mài']?.bank || 0);
+        const vp = (x.alloc?.['Văn phòng']?.cash || 0) + (x.alloc?.['Văn phòng']?.bank || 0);
+
+        let typeBadge = `<span class="badge ${x.type === 'Thu' ? 'badge-good' : x.type === 'Chi' ? 'badge-bad' : 'badge-vp'}">${esc(x.type)}</span>`;
+        let invBadge = x.invoiceStatus === 'Đã XHD' ? `<span class="badge badge-good">Đã XHD</span>` : (x.invoiceStatus ? `<span class="badge badge-warn">${esc(x.invoiceStatus)}</span>` : `<span style="color:var(--muted)">—</span>`);
+        let bankBadge = x.bankCheck ? `<span class="badge badge-good" title="${esc(x.bankCheck)}">✔ Đã nhận</span>` : (((x.alloc?.['F&B']?.bank || 0) + (x.alloc?.['Sơn Mài']?.bank || 0) + (x.alloc?.['Văn phòng']?.bank || 0)) > 0 ? `<span class="badge badge-warn">Chưa check</span>` : `—`);
+
+        return `<tr>
+          <td style="font-weight:600;white-space:nowrap">${x.date}</td>
+          <td>${typeBadge}</td>
+          <td style="color:var(--muted);white-space:pre-line;font-size:0.78rem">${esc(x.voucher) || '—'}</td>
+          <td class="money" style="color:var(--fnb)">${fb ? num(fb) : '—'}</td>
+          <td class="money" style="color:var(--son)">${sm ? num(sm) : '—'}</td>
+          <td class="money" style="color:var(--vp)">${vp ? num(vp) : '—'}</td>
+          <td>${invBadge}</td>
+          <td>${bankBadge}</td>
+          <td style="max-width:320px;font-size:0.8rem">
+            ${esc(x.description)}
+            ${x.person ? `<div style="font-size:0.75rem;color:var(--gold);font-weight:600">Người nộp/nhận: ${esc(x.person)}</div>` : ''}
+          </td>
+          <td style="white-space:nowrap">
+            <button class="btn btn-secondary" style="padding:4px 8px;font-size:0.75rem;color:var(--bad)" onclick="deleteTransaction(${x.id})">✕ Xóa</button>
+          </td>
+        </tr>`;
+      }).join("");
+    }
+
+    function filterTransactions() {
+      const q = (document.getElementById("txSearch")?.value || "").toLowerCase().trim();
+      const seg = document.getElementById("filterSegment")?.value || "";
+      const type = document.getElementById("filterType")?.value || "";
+      const inv = document.getElementById("filterInvoice")?.value || "";
+
+      let list = masterData.filter(x => {
+        const matchQ = !q || (x.description + " " + x.person + " " + x.voucher).toLowerCase().includes(q);
+        const matchSeg = !seg || (((x.alloc?.[seg]?.cash || 0) + (x.alloc?.[seg]?.bank || 0)) > 0);
+        const matchType = !type || (type === "ứng" ? x.type.includes("ứng") : x.type === type);
+        const matchInv = !inv || (x.invoiceStatus === inv);
+        return matchQ && matchSeg && matchType && matchInv;
+      });
+
+      renderTransactions(list);
+    }
+
+    function deleteTransaction(id) {
+      if (confirm("Bạn có chắc chắn muốn xóa giao dịch này?")) {
+        masterData = masterData.filter(x => x.id !== id);
+        localStorage.setItem("cashflow360_v2", JSON.stringify(masterData));
+        calculateStats();
+        filterTransactions();
+      }
+    }
+
+    function exportDataCSV() {
+      const rows = [
+        ["Ngày", "Loại", "Số phiếu", "F&B Cash", "F&B Bank", "Sơn Mài Cash", "Sơn Mài Bank", "VP Cash", "VP Bank", "Xuất HĐ", "Đối chiếu Bank", "Diễn giải", "Người nộp/nhận"],
+        ...masterData.map(x => [
+          x.date, x.type, x.voucher,
+          x.alloc?.["F&B"]?.cash || 0, x.alloc?.["F&B"]?.bank || 0,
+          x.alloc?.["Sơn Mài"]?.cash || 0, x.alloc?.["Sơn Mài"]?.bank || 0,
+          x.alloc?.["Văn phòng"]?.cash || 0, x.alloc?.["Văn phòng"]?.bank || 0,
+          x.invoiceStatus, x.bankCheck, x.description, x.person
+        ])
+      ];
+      const csvContent = "\uFEFF" + rows.map(r => r.map(v => `"${String(v ?? "").replaceAll('"', '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `hong_ngoc_ha_chung_tu_export_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+    }
+
+    // Modal
+    function openModalApp(url, title) {
+      const modal = document.getElementById("appModal");
+      document.getElementById("modalAppTitle").textContent = title;
+      document.getElementById("modalAppIframe").src = url;
+      document.getElementById("modalExternalLink").href = url;
+      modal.classList.add("show");
+    }
+    function closeModalApp() {
+      document.getElementById("appModal").classList.remove("show");
+      document.getElementById("modalAppIframe").src = "about:blank";
+    }
+
+    // Theme Toggle
+    const themeBtn = document.getElementById("themeToggle");
+    themeBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("portal_theme", next);
+    });
+    if (localStorage.getItem("portal_theme") === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+
+    calculateStats();
+    renderTransactions(masterData);
+  </script>
+</body>
+</html>

@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cổng Điều Hành & Quản Trị Thu Chi Ba Mảng — Sơn Mài · F&B · Văn Phòng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F4F3EE;
+      --surface: #FFFFFF;
+      --surface-sub: #FAF9F5;
+      --sunk: #EFECE4;
+      --ink: #1B1814;
+      --ink-soft: #38342E;
+      --muted: #6E685E;
+      --line: #E2DDD3;
+      --line-light: #ECE8E0;
+      
+      /* Mảng màu thương hiệu chuẩn */
+      --gold: #8E6516;
+      --gold-soft: #F6EEDC;
+      --gold-glow: rgba(142, 101, 22, 0.15);
+      
+      --son: #A3322A;           /* Sơn mài - Đỏ son truyền thống */
+      --son-soft: #FCECE9;
+      --son-border: #E8B4AF;
+      
+      --fnb: #266856;           /* F&B - Xanh ngọc / Lá cà phê */
+      --fnb-soft: #E5F3EE;
+      --fnb-border: #A6D4C5;
+      
+      --vp: #475569;            /* Văn phòng - Xám đá phiến */
+      --vp-soft: #EBF0F5;
+      --vp-border: #CBD5E1;
+      
+      --good: #1E7E4B;
+      --good-soft: #E3F5EC;
+      --warn: #B45309;
+      --warn-soft: #FEF3C7;
+      --bad: #BE123C;
+      --bad-soft: #FFE4E6;
+      --blue: #1D4ED8;
+      --blue-soft: #EFF6FF;
+
+      --font-display: "Lora", Georgia, "Times New Roman", serif;
+      --font-body: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-sm: 0 1px 3px rgba(27,24,20,0.05);
+      --shadow-md: 0 4px 14px rgba(27,24,20,0.06), 0 1px 3px rgba(27,24,20,0.04);
+      --shadow-lg: 0 12px 28px rgba(27,24,20,0.09), 0 4px 10px rgba(27,24,20,0.04);
+    }
+
+    [data-theme="dark"] {
+      --bg: #12100E;
+      --surface: #1B1815;
+      --surface-sub: #171412;
+      --sunk: #24201C;
+      --ink: #F2EDE4;
+      --ink-soft: #DDD6CA;
+      --muted: #A39B8E;
+      --line: #332E27;
+      --line-light: #28241F;
+      
+      --gold: #DDA843;
+      --gold-soft: #382D16;
+      --gold-glow: rgba(221, 168, 67, 0.2);
+      
+      --son: #E56E63;
+      --son-soft: #3B1B18;
+      --son-border: #622C26;
+      
+      --fnb: #52BFA1;
+      --fnb-soft: #143228;
+      --fnb-border: #1F5444;
+      
+      --vp: #93A6BA;
+      --vp-soft: #1E2732;
+      --vp-border: #334155;
+      
+      --good: #4ADE80;
+      --good-soft: #143521;
+      --warn: #FBBF24;
+      --warn-soft: #3B2E10;
+      --bad: #FB7185;
+      --bad-soft: #3B151C;
+      --blue: #60A5FA;
+      --blue-soft: #172554;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.5);
+      --shadow-lg: 0 12px 28px rgba(0,0,0,0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 15px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Top Sticky Navigation Bar */
+    header.portal-nav {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(244, 243, 238, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    [data-theme="dark"] header.portal-nav {
+      background: rgba(18, 16, 14, 0.94);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 16px;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--gold), #5A3E09);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 19px;
+      font-family: var(--font-display);
+      box-shadow: 0 4px 12px var(--gold-glow);
+    }
+
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title h1 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .brand-title span {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 7px 11px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--ink);
+      background: var(--sunk);
+    }
+    .nav-links a.highlight {
+      color: var(--gold);
+      font-weight: 700;
+      background: var(--gold-soft);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px var(--gold-glow);
+    }
+    .btn-primary:hover {
+      background: #775310;
+      box-shadow: 0 4px 14px var(--gold-glow);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover {
+      background: var(--sunk);
+      border-color: var(--muted);
+    }
+
+    .btn-son { background: var(--son); color: #FFF; }
+    .btn-son:hover { background: #8E2922; }
+
+    .btn-fnb { background: var(--fnb); color: #FFF; }
+    .btn-fnb:hover { background: #1F5444; }
+
+    .btn-icon {
+      padding: 8px;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    /* Badge & Tag */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-gold { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(142, 101, 22, 0.2); }
+    .badge-son { background: var(--son-soft); color: var(--son); border: 1px solid var(--son-border); }
+    .badge-fnb { background: var(--fnb-soft); color: var(--fnb); border: 1px solid var(--fnb-border); }
+    .badge-vp  { background: var(--vp-soft); color: var(--vp); border: 1px solid var(--vp-border); }
+    .badge-good { background: var(--good-soft); color: var(--good); }
+    .badge-warn { background: var(--warn-soft); color: var(--warn); }
+    .badge-bad { background: var(--bad-soft); color: var(--bad); }
+
+    /* Hero Section */
+    .hero {
+      padding: 44px 0 32px;
+      position: relative;
+    }
+    .hero-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+    .hero-meta {
+      max-width: 720px;
+    }
+    .hero-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--good);
+      box-shadow: 0 0 0 0 rgba(30, 126, 75, 0.7);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(30, 126, 75, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(30, 126, 75, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(30, 126, 75, 0); }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 2.35rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+      text-wrap: balance;
+    }
+    .hero-desc {
+      font-size: 1.02rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 660px;
+    }
+
+    .hero-cta-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .period-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      padding: 6px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+    .period-filter-bar button {
+      background: transparent;
+      border: none;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .period-filter-bar button:hover { color: var(--ink); }
+    .period-filter-bar button.active {
+      background: var(--ink);
+      color: var(--bg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Executive KPI Grid */
+    .kpi-master-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+    @media (max-width: 1080px) { .kpi-master-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .kpi-master-grid { grid-template-columns: 1fr; } }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .kpi-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--gold);
+    }
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .kpi-card.gold::before { background: var(--gold); }
+    .kpi-card.green::before { background: var(--good); }
+    .kpi-card.red::before { background: var(--bad); }
+    .kpi-card.blue::before { background: var(--blue); }
+
+    .kpi-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+    .kpi-icon-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      background: var(--sunk);
+    }
+
+    .kpi-val {
+      font-size: 1.75rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .kpi-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kpi-sub b { color: var(--ink); font-weight: 600; }
+
+    /* ======================================================== */
+    /* TRUNG TÂM NHẬP LIỆU NGHIỆP VỤ BA MẢNG (DATA ENTRY CENTER) */
+    /* ======================================================== */
+    .input-hub-section {
+      margin-bottom: 48px;
+    }
+    .input-hub-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .input-hub-header {
+      padding: 22px 28px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface-sub) 0%, var(--surface) 100%);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .input-hub-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .input-hub-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .hub-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 24px;
+      background: var(--sunk);
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+    .hub-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .hub-tab-btn:hover {
+      background: var(--surface);
+      color: var(--ink);
+    }
+    .hub-tab-btn.active {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+    .hub-tab-btn.tab-sm.active { border-top: 3px solid var(--son); }
+    .hub-tab-btn.tab-fnb.active { border-top: 3px solid var(--fnb); }
+    .hub-tab-btn.tab-chi.active { border-top: 3px solid var(--gold); }
+    .hub-tab-btn.tab-paste.active { border-top: 3px solid var(--vp); }
+
+    .hub-content-box {
+      padding: 28px;
+    }
+    .entry-panel {
+      display: none;
+    }
+    .entry-panel.active {
+      display: block;
+    }
+
+    .entry-grid-2 {
+      display: grid;
+      grid-template-columns: minmax(320px, 480px) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+    @media (max-width: 940px) {
+      .entry-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .form-box {
+      background: var(--surface-sub);
+      border: 1px solid var(--line-light);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .form-box h4 {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-box p.hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--ink);
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-glow);
+    }
+    .form-group input.money-input {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+    }
+
+    .quick-calc-box {
+      background: var(--sunk);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .quick-calc-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .quick-calc-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .side-overview-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .side-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .side-kpi-mini {
+      background: var(--surface-sub);
+      border: 1px solid var(--line-light);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .side-kpi-mini span {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .side-kpi-mini b {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .matrix-alloc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 8px 0;
+    }
+    @media (max-width: 640px) {
+      .matrix-alloc-grid { grid-template-columns: 1fr; }
+    }
+    .matrix-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: var(--surface);
+    }
+    .matrix-card h5 {
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .matrix-card.sm h5 { color: var(--son); }
+    .matrix-card.fnb h5 { color: var(--fnb); }
+    .matrix-card.vp h5 { color: var(--vp); }
+
+    .toast-msg {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: #1B1814;
+      color: #FFFFFF;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-weight: 600;
+      font-size: 0.88rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    /* 3 Business Pillars Section */
+    .section-title-wrap {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .section-subtitle {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 44px;
+    }
+    @media (max-width: 960px) { .pillars-grid { grid-template-columns: 1fr; } }
+
+    .pillar-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .pillar-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .pillar-card.son { border-top: 4px solid var(--son); }
+    .pillar-card.fnb { border-top: 4px solid var(--fnb); }
+    .pillar-card.vp  { border-top: 4px solid var(--vp); }
+
+    .pillar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .pillar-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .pillar-role {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 99px;
+    }
+    .pillar-card.son .pillar-role { background: var(--son-soft); color: var(--son); }
+    .pillar-card.fnb .pillar-role { background: var(--fnb-soft); color: var(--fnb); }
+    .pillar-card.vp  .pillar-role { background: var(--vp-soft); color: var(--vp); }
+
+    .pillar-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: var(--surface-sub);
+      border: 1px solid var(--line-light);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+    .p-met-item { display: flex; flex-direction: column; }
+    .p-met-label {
+      font-size: 0.74rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .p-met-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+    }
+    .color-good { color: var(--good); }
+    .color-bad { color: var(--bad); }
+
+    .pillar-net-box {
+      border-top: 1px dashed var(--line);
+      padding-top: 12px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .pillar-net-box span {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .pillar-net-val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pillar-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.84rem;
+      color: var(--ink-soft);
+      margin-bottom: 22px;
+      flex-grow: 1;
+    }
+    .pillar-features li { display: flex; align-items: flex-start; gap: 8px; }
+    .pillar-features li svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 3px; }
+
+    /* Section chuyển tiếp sang Trang Tra Cứu & Báo Cáo Chuyên Sâu */
+    .portal-cta-section {
+      margin-bottom: 50px;
+    }
+    .portal-cta-card {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-sub) 60%, var(--gold-soft) 100%);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--gold);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .portal-cta-header {
+      margin-bottom: 24px;
+    }
+    .portal-cta-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 10px 0 6px 0;
+    }
+    .portal-cta-header p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 820px;
+      line-height: 1.6;
+    }
+    .cta-features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 900px) {
+      .cta-features-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 580px) {
+      .cta-features-grid { grid-template-columns: 1fr; }
+    }
+    .cta-feature-pill {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .cta-feature-pill:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      background: var(--surface-sub);
+    }
+    .cta-feature-pill .icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .cta-feature-pill strong {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--ink);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .cta-feature-pill small {
+      display: block;
+      font-size: 0.77rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .portal-cta-action {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--line);
+    }
+
+    /* Footer */
+    footer.portal-footer {
+      border-top: 1px solid var(--line);
+      background: var(--surface);
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="portal-nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand-block">
+        <div class="brand-mark">HN</div>
+        <div class="brand-title">
+          <h1>Hồng Ngọc Hà · Điều Hành</h1>
+          <span>Quản lý Thu Chi & Dòng Tiền Ba Mảng</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#dashboard">Chỉ số KPI</a></li>
+          <li><a href="#input-hub" class="highlight">✍️ Nhập Liệu 3 Mảng</a></li>
+          <li><a href="#segments">3 Mảng Kinh Doanh</a></li>
+          <li><a href="tra-cuu.html" style="color:var(--gold);font-weight:700">🔍 Tra Cứu &amp; Báo Cáo Chuyên Sâu ↗</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-icon" id="themeToggle" title="Đổi giao diện Sáng / Tối">🌓</button>
+        <a href="tra-cuu.html" class="btn btn-primary" title="Mở Trung Tâm Tra Cứu Chứng Từ & Báo Cáo Chuyên Sâu">🔍 Tra Cứu &amp; SOP</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container" id="top">
+
+    <!-- Hero Section -->
+    <section class="hero" id="dashboard">
+      <div class="hero-header">
+        <div class="hero-meta">
+          <div class="hero-badge-row">
+            <span class="badge badge-gold"><span class="pulse-dot"></span> Hệ thống đang vận hành</span>
+            <span class="badge" style="background:var(--sunk);color:var(--ink-soft)">Dữ liệu thực tế: 03/09/2026 – 07/10/2026</span>
+            <span class="badge" style="background:var(--good-soft);color:var(--good)"><span id="txCountBadge">78</span> Chứng từ đã đối soát</span>
+          </div>
+          <h2 class="hero-title">Cổng Quản Trị Dòng Tiền & Hiệu Quả Hoạt Động Doanh Nghiệp</h2>
+          <p class="hero-desc">
+            Hợp nhất bức tranh tài chính toàn diện cho 3 trung tâm hoạt động: 
+            <strong style="color:var(--son)">Sơn Mài</strong> (Lợi nhuận & Hóa đơn VAT), 
+            <strong style="color:var(--fnb)">F&amp;B</strong> (Doanh thu KiotViet & Đối soát MBB/Tiền mặt), và 
+            <strong style="color:var(--vp)">Văn Phòng</strong> (Chi phí cố định không phân bổ).
+          </p>
+        </div>
+
+        <div class="hero-cta-bar">
+          <a href="#input-hub" class="btn btn-primary" style="box-shadow:var(--shadow-md)">
+            ✍️ Nhập Giao Dịch Mới
+          </a>
+          <div class="period-filter-bar" id="periodFilters">
+            <button class="active" data-period="all">Toàn kỳ</button>
+            <button data-period="2026-09">Tháng 09/2026</button>
+            <button data-period="2026-10">Tháng 10/2026</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master KPI Cards -->
+      <div class="kpi-master-grid">
+        <!-- KPI 1: Tổng Thu -->
+        <div class="kpi-card gold">
+          <div class="kpi-head">
+            <span class="kpi-label">Tổng Doanh Thu / Thu Tiền</span>
+            <span class="kpi-icon-pill">📥</span>
+          </div>
+          <div class="kpi-val" id="valTotalThu">418.643.343 ₫</div>
+          <div class="kpi-sub">
+            Cơ sở tiền mặt thực nhận: <b id="subThuBreakdown">F&B 72.7% · SM 26.1%</b>
+          </div>
+        </div>
+
+        <!-- KPI 2: Tổng Chi -->
+        <div class="kpi-card red">
+          <div class="kpi-head">
+            <span class="kpi-label">Tổng Chi Phí Hoạt Động</span>
+            <span class="kpi-icon-pill">📤</span>
+          </div>
+          <div class="kpi-val" id="valTotalChi">162.971.166 ₫</div>
+          <div class="kpi-sub">
+            Gồm NVL, vận hành & lương: <b id="subChiRatio">Chi / Thu 38.9%</b>
+          </div>
+        </div>
+
+        <!-- KPI 3: Dòng tiền ròng -->
+        <div class="kpi-card green">
+          <div class="kpi-head">
+            <span class="kpi-label">Dòng Tiền Ròng (Net Cashflow)</span>
+            <span class="kpi-icon-pill">💎</span>
+          </div>
+          <div class="kpi-val color-good" id="valNetCashflow">+255.672.177 ₫</div>
+          <div class="kpi-sub">
+            Biên thặng dư hoạt động: <b class="color-good" id="subMargin">61.1%</b>
+          </div>
+        </div>
+
+        <!-- KPI 4: Phân bổ Quỹ -->
+        <div class="kpi-card blue">
+          <div class="kpi-head">
+            <span class="kpi-label">Số Dư Quỹ (Cash vs Bank)</span>
+            <span class="kpi-icon-pill">🏦</span>
+          </div>
+          <div class="kpi-val" id="valLiquidity">TM: 112M · Bank: 144M</div>
+          <div class="kpi-sub">
+            <span>Tiền mặt: <b id="subCashFund">112.023.778 ₫</b></span> · 
+            <span>Ngân hàng: <b id="subBankFund">143.648.399 ₫</b></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TRUNG TÂM NHẬP LIỆU NGHIỆP VỤ BA MẢNG (NEW DIRECT INPUT) -->
+    <!-- ======================================================== -->
+    <section class="input-hub-section" id="input-hub">
+      <div class="input-hub-card">
+        <div class="input-hub-header">
+          <div>
+            <h3 class="input-hub-title">✍️ Trung Tâm Nhập Liệu Nghiệp Vụ Ba Mảng</h3>
+            <p class="input-hub-desc">Nhập trực tiếp khoản thu Sơn Mài, đối soát KiotViet F&amp;B, chi phí hoạt động 3 mảng hoặc dán sao kê ngân hàng — Số liệu tự động cập nhật ngay vào báo cáo.</p>
+          </div>
+          <div>
+            <span class="badge badge-gold">⚡ Lưu trữ cục bộ &amp; Tự động tính toán</span>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs for Data Entry -->
+        <div class="hub-tabs" id="entryTabs">
+          <button class="hub-tab-btn tab-sm active" data-tab="sm">🏺 1. Thu Sơn Mài &amp; Hóa Đơn</button>
+          <button class="hub-tab-btn tab-fnb" data-tab="fnb">☕ 2. Đối Soát Thu F&amp;B (KiotViet)</button>
+          <button class="hub-tab-btn tab-chi" data-tab="chi">📤 3. Ghi Khoản Chi (3 Mảng)</button>
+          <button class="hub-tab-btn tab-paste" data-tab="paste">📋 4. Dán Sao Kê MBB Hàng Loạt</button>
+        </div>
+
+        <div class="hub-content-box">
+          
+          <!-- TAB 1: SƠN MÀI -->
+          <div class="entry-panel active" id="panel-sm">
+            <div class="entry-grid-2">
+              <form class="form-box" id="formSm" onsubmit="handleSaveSm(event)">
+                <h4>🏺 Ghi Khoản Thu Sơn Mài</h4>
+                <p class="hint">Áp dụng theo cơ sở tiền mặt, theo dõi hóa đơn GTGT cho từng đơn hàng/hợp đồng bán tranh hoặc workshop.</p>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Ngày thu *</label>
+                    <input type="date" id="smDate" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Hình thức thanh toán *</label>
+                    <select id="smSrc">
+                      <option value="ck">Chuyển khoản (Bank)</option>
+                      <option value="tm">Tiền mặt (Cash)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Khách hàng / Nội dung thu *</label>
+                  <input type="text" id="smContent" required placeholder="VD: Cty ABC – bình sơn mài sen vàng đợt 1">
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số tiền thu (VND) *</label>
+                    <input type="text" id="smAmount" class="money-input" required placeholder="0 ₫" oninput="formatMoneyInput(this)">
+                  </div>
+                  <div class="form-group">
+                    <label>Tình trạng hóa đơn</label>
+                    <select id="smInvoiceStatus">
+                      <option value="Đã XHD">Đã xuất HĐ</option>
+                      <option value="Chưa XHD">Chưa xuất HĐ</option>
+                      <option value="Không cần XHD">Không cần XHD</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số hóa đơn (nếu có)</label>
+                    <input type="text" id="smInv" placeholder="VD: 0000452">
+                  </div>
+                  <div class="form-group">
+                    <label>Đối chiếu Bank (nếu CK)</label>
+                    <input type="text" id="smBankCheck" placeholder="VD: Sacombank - đã nhận">
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:6px">
+                  <button type="submit" class="btn btn-son" style="flex-grow:1">
+                    💾 Lưu Khoản Thu Sơn Mài
+                  </button>
+                  <button type="reset" class="btn btn-secondary">Làm mới</button>
+                </div>
+              </form>
+
+              <!-- Overview panel Sơn Mài -->
+              <div class="side-overview-box">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <h4 style="font-family:var(--font-display);font-size:1.1rem;color:var(--son)">🏺 Tóm Tắt Mảng Sơn Mài</h4>
+                  <span class="badge badge-son">Trung tâm lợi nhuận</span>
+                </div>
+                <div class="side-kpi-row">
+                  <div class="side-kpi-mini">
+                    <span>Tổng Thu SM</span>
+                    <b style="color:var(--son)" id="smOverviewThu">109.389.250 ₫</b>
+                  </div>
+                  <div class="side-kpi-mini">
+                    <span>Tổng Chi SM</span>
+                    <b style="color:var(--bad)" id="smOverviewChi">19.161.037 ₫</b>
+                  </div>
+                  <div class="side-kpi-mini">
+                    <span>Lãi Góp SM</span>
+                    <b class="color-good" id="smOverviewNet">+90.228.213 ₫</b>
+                  </div>
+                </div>
+                <div style="font-size:0.82rem;color:var(--muted)">
+                  <strong>Giao dịch Sơn Mài mới nhất:</strong>
+                  <div id="smRecentList" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+                    <!-- Dynamic -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: F&B ĐỐI SOÁT NGÀY -->
+          <div class="entry-panel" id="panel-fnb">
+            <div class="entry-grid-2">
+              <form class="form-box" id="formFnb" onsubmit="handleSaveFnb(event)">
+                <h4>☕ Đối Soát Doanh Thu Ngày F&amp;B</h4>
+                <p class="hint">Nhập số liệu bán hàng KiotViet hàng ngày và đối soát với tiền thực thu (MBB chuyển khoản + Tiền mặt).</p>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Ngày bán hàng *</label>
+                    <input type="date" id="fnbDate" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Người phụ trách quầy</label>
+                    <input type="text" id="fnbPerson" placeholder="Chị Hiền" value="Chị Hiền">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Doanh thu phần mềm KiotViet (VND) *</label>
+                  <input type="text" id="fnbKv" class="money-input" required placeholder="0 ₫" oninput="formatMoneyInput(this); calcFnbDiff();">
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Tiền MBB nhận trong ngày (VND)</label>
+                    <input type="text" id="fnbMbb" class="money-input" placeholder="0 ₫" oninput="formatMoneyInput(this); calcFnbDiff();">
+                  </div>
+                  <div class="form-group">
+                    <label>Tiền mặt nộp (VND)</label>
+                    <input type="text" id="fnbCash" class="money-input" placeholder="0 ₫" oninput="formatMoneyInput(this); calcFnbDiff();">
+                  </div>
+                </div>
+
+                <!-- Live Auto-diff Box -->
+                <div class="quick-calc-box">
+                  <span class="quick-calc-label">Chênh lệch = KiotViet − (MBB + Tiền mặt):</span>
+                  <span class="quick-calc-val" id="fnbDiffVal" style="color:var(--good)">0 ₫ (Khớp)</span>
+                </div>
+
+                <div class="form-group">
+                  <label>Ghi chú / Diễn giải lý do chênh lệch</label>
+                  <input type="text" id="fnbNote" placeholder="VD: Khớp ca tối, trừ 2 ly nước cafe cổ đông">
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:6px">
+                  <button type="submit" class="btn btn-fnb" style="flex-grow:1">
+                    💾 Lưu Đối Soát Ngày F&amp;B
+                  </button>
+                  <button type="reset" class="btn btn-secondary">Làm mới</button>
+                </div>
+              </form>
+
+              <!-- Overview panel F&B -->
+              <div class="side-overview-box">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <h4 style="font-family:var(--font-display);font-size:1.1rem;color:var(--fnb)">☕ Tóm Tắt Dòng Tiền F&amp;B</h4>
+                  <span class="badge badge-fnb">Doanh thu chủ lực (72.7%)</span>
+                </div>
+                <div class="side-kpi-row">
+                  <div class="side-kpi-mini">
+                    <span>Tổng Thu F&amp;B</span>
+                    <b style="color:var(--fnb)" id="fnbOverviewThu">304.254.093 ₫</b>
+                  </div>
+                  <div class="side-kpi-mini">
+                    <span>Tổng Chi F&amp;B</span>
+                    <b style="color:var(--bad)" id="fnbOverviewChi">108.143.526 ₫</b>
+                  </div>
+                  <div class="side-kpi-mini">
+                    <span>Lãi Góp F&amp;B</span>
+                    <b class="color-good" id="fnbOverviewNet">+196.110.567 ₫</b>
+                  </div>
+                </div>
+                <div style="font-size:0.82rem;color:var(--muted)">
+                  <strong>Số liệu đối soát F&amp;B gần nhất:</strong>
+                  <div id="fnbRecentList" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+                    <!-- Dynamic -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: GHI KHOẢN CHI PHÍ (CẢ 3 MẢNG) -->
+          <div class="entry-panel" id="panel-chi">
+            <div class="entry-grid-2">
+              <form class="form-box" id="formChi" onsubmit="handleSaveExpense(event)">
+                <h4>📤 Ghi Khoản Chi Phí Hoạt Động</h4>
+                <p class="hint">Ghi nhận chi phí cho 1 trong 3 mảng hoạt động (Sơn Mài, F&amp;B hoặc Khối Văn Phòng dùng chung).</p>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Ngày chi *</label>
+                    <input type="date" id="chiDate" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Nguồn thanh toán *</label>
+                    <select id="chiSrc">
+                      <option value="tm">Tiền mặt (Cash)</option>
+                      <option value="ck">Chuyển khoản (Bank)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Mảng chịu chi phí *</label>
+                    <select id="chiSeg" required>
+                      <option value="fnb">☕ F&amp;B (Bếp &amp; Cà phê)</option>
+                      <option value="sm">🏺 Sơn Mài (Xưởng &amp; Tranh)</option>
+                      <option value="vp">🏢 Khối Văn Phòng (Cost center)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Khoản mục chi phí *</label>
+                    <select id="chiCat" required>
+                      <option value="NVL / Hàng hóa">NVL / Hàng hóa (Bếp, Cà phê, Sơn)</option>
+                      <option value="Thuê mặt bằng">Thuê mặt bằng</option>
+                      <option value="Điện nước">Điện nước</option>
+                      <option value="Vận chuyển">Vận chuyển / Giao hàng</option>
+                      <option value="Marketing">Marketing &amp; Quảng cáo</option>
+                      <option value="Công cụ dụng cụ">Công cụ dụng cụ</option>
+                      <option value="Thuế, phí">Thuế, phí</option>
+                      <option value="Phí ngân hàng">Phí ngân hàng / SMS</option>
+                      <option value="Khác">Chi phí khác</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Diễn giải nội dung chi *</label>
+                  <input type="text" id="chiDesc" required placeholder="VD: Mua cà phê hạt Arabica đợt 2, HĐ 1C26THS...">
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Số tiền chi (VND) *</label>
+                    <input type="text" id="chiAmount" class="money-input" required placeholder="0 ₫" oninput="formatMoneyInput(this)">
+                  </div>
+                  <div class="form-group">
+                    <label>Người nhận tiền / Đối tác</label>
+                    <input type="text" id="chiPerson" placeholder="VD: Nhà cung cấp rau củ">
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:6px">
+                  <button type="submit" class="btn btn-primary" style="flex-grow:1">
+                    💾 Lưu Khoản Chi Phí
+                  </button>
+                  <button type="reset" class="btn btn-secondary">Làm mới</button>
+                </div>
+              </form>
+
+              <!-- Overview panel Chi phí -->
+              <div class="side-overview-box">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <h4 style="font-family:var(--font-display);font-size:1.1rem;color:var(--bad)">📤 Cơ Cấu Chi Phí 3 Mảng</h4>
+                  <span class="badge badge-warn">Kiểm soát ngân sách</span>
+                </div>
+                <div class="side-kpi-row">
+                  <div class="side-kpi-mini">
+                    <span>Chi F&amp;B</span>
+                    <b style="color:var(--fnb)" id="chiOverviewFnb">108.143.526 ₫</b>
+                  </div>
+                  <div class="side-kpi-mini">
+                    <span>Chi Sơn Mài</span>
+                    <b style="color:var(--son)" id="chiOverviewSm">19.161.037 ₫</b>
+                  </div>
+                  <div class="side-kpi-mini">
+                    <span>Chi Văn Phòng</span>
+                    <b style="color:var(--vp)" id="chiOverviewVp">35.666.603 ₫</b>
+                  </div>
+                </div>
+                <div style="font-size:0.82rem;color:var(--muted)">
+                  <strong>Các khoản chi vừa ghi nhận:</strong>
+                  <div id="chiRecentList" style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+                    <!-- Dynamic -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: DÁN SAO KÊ MBB TỰ ĐỘNG -->
+          <div class="entry-panel" id="panel-paste">
+            <div class="form-box">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <h4>📋 Dán Sao Kê Ngân Hàng MBB Hàng Loạt</h4>
+                <span class="badge badge-vp">Tự động phân tích từ Excel</span>
+              </div>
+              <p class="hint">Sao chép các dòng ghi Nợ/Có trong file Excel sao kê MBB (cột <b>Ngày | Nội dung | Số tiền</b>), dán vào khung bên dưới. Hệ thống tự động bỏ chọn dòng lương theo quy ước của SPEC.md.</p>
+
+              <div class="form-group">
+                <textarea id="pasteInput" rows="5" placeholder="09/10/2026	CK thanh toan tien dien T9	2.350.000
+10/10/2026	Mua ca phe hat Arabica	4.200.000
+11/10/2026	Phi SMS MBB	110.000"></textarea>
+              </div>
+
+              <div style="display:flex;gap:10px">
+                <button type="button" class="btn btn-primary" onclick="parsePasteData()">
+                  🔍 Phân Tích Dữ Liệu Dán
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('pasteInput').value=''; document.getElementById('pastePreviewArea').hidden=true;">
+                  Xóa nội dung
+                </button>
+              </div>
+
+              <!-- Preview Table -->
+              <div id="pastePreviewArea" hidden style="margin-top:16px;border-top:1px solid var(--line);padding-top:16px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                  <h5 style="font-size:0.95rem;font-weight:700">Xem Trước &amp; Gán Mảng Cho Từng Dòng</h5>
+                  <button type="button" class="btn btn-primary" id="btnImportBatch" onclick="importBatchPasted()">
+                    📥 Nhập Hàng Loạt Vào Hệ Thống
+                  </button>
+                </div>
+                <div class="scroll-table-wrapper" style="max-height:280px">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Nhập</th>
+                        <th>Ngày</th>
+                        <th>Nội dung</th>
+                        <th style="text-align:right">Số tiền</th>
+                        <th>Mảng</th>
+                        <th>Khoản mục</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pastePreviewTbody">
+                      <!-- Rendered by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- 3 Business Segments Deep Dive -->
+    <section class="pillars-section" id="segments">
+      <div class="section-title-wrap">
+        <div>
+          <h3 class="section-title">Chi Tiết 3 Mảng Hoạt Động Chiến Lược</h3>
+          <p class="section-subtitle">Được cấu trúc chặt chẽ theo nguyên tắc tài chính của tài liệu đặc tả SPEC.md</p>
+        </div>
+      </div>
+
+      <div class="pillars-grid">
+        <!-- Mảng Sơn Mài -->
+        <div class="pillar-card son">
+          <div class="pillar-head">
+            <div class="pillar-title">🏺 Sơn Mài</div>
+            <span class="pillar-role">Trung Tâm Lợi Nhuận</span>
+          </div>
+
+          <div class="pillar-metrics">
+            <div class="p-met-item">
+              <span class="p-met-label">Doanh thu thu về</span>
+              <span class="p-met-val" id="smRevenue">109.389.250 ₫</span>
+            </div>
+            <div class="p-met-item">
+              <span class="p-met-label">Chi phí vận hành</span>
+              <span class="p-met-val" id="smExpense">19.161.037 ₫</span>
+            </div>
+          </div>
+
+          <div class="pillar-net-box">
+            <span>Lãi Góp (Contribution Margin)</span>
+            <div class="pillar-net-val color-good" id="smNet">+90.228.213 ₫</div>
+          </div>
+
+          <ul class="pillar-features">
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Biên lợi nhuận 82.5%</strong>: Doanh thu tranh cao cấp &amp; workshop.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Kiểm soát HĐ GTGT</strong>: Theo dõi ngày xuất và số hóa đơn điện tử cho khách công ty.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Chi phí NVL đặc thù</strong>: Sơn ta, vỏ trứng, vàng thếp, bao bì đóng gói.</span>
+            </li>
+          </ul>
+
+          <button onclick="switchEntryTab('sm')" class="btn btn-son" style="width:100%">
+            Nhập Khoản Thu Sơn Mài ↓
+          </button>
+        </div>
+
+        <!-- Mảng F&B -->
+        <div class="pillar-card fnb">
+          <div class="pillar-head">
+            <div class="pillar-title">☕ F&amp;B Cà Phê &amp; Bếp</div>
+            <span class="pillar-role">Trung Tâm Lợi Nhuận</span>
+          </div>
+
+          <div class="pillar-metrics">
+            <div class="p-met-item">
+              <span class="p-met-label">Doanh thu thu về</span>
+              <span class="p-met-val" id="fnbRevenue">304.254.093 ₫</span>
+            </div>
+            <div class="p-met-item">
+              <span class="p-met-label">Chi phí vận hành</span>
+              <span class="p-met-val" id="fnbExpense">108.143.526 ₫</span>
+            </div>
+          </div>
+
+          <div class="pillar-net-box">
+            <span>Lãi Góp (Contribution Margin)</span>
+            <div class="pillar-net-val color-good" id="fnbNet">+196.110.567 ₫</div>
+          </div>
+
+          <ul class="pillar-features">
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Dòng tiền chủ lực (72.7%)</strong>: Thu tiền hàng ngày qua quầy và chuyển khoản.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Công thức đối soát chuẩn</strong>: <code>Doanh thu KiotViet = Tiền MBB + Tiền mặt</code>.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Chi phí nguyên liệu</strong>: Cà phê hạt, sữa đường, thực phẩm tươi sống bếp ăn.</span>
+            </li>
+          </ul>
+
+          <button onclick="switchEntryTab('fnb')" class="btn btn-fnb" style="width:100%">
+            Đối Soát Doanh Thu F&amp;B ↓
+          </button>
+        </div>
+
+        <!-- Mảng Văn Phòng -->
+        <div class="pillar-card vp">
+          <div class="pillar-head">
+            <div class="pillar-title">🏢 Khối Văn Phòng</div>
+            <span class="pillar-role">Trung Tâm Chi Phí</span>
+          </div>
+
+          <div class="pillar-metrics">
+            <div class="p-met-item">
+              <span class="p-met-label">Thu nhập phát sinh</span>
+              <span class="p-met-val" id="vpRevenue">5.000.000 ₫</span>
+            </div>
+            <div class="p-met-item">
+              <span class="p-met-label">Chi phí quản lý</span>
+              <span class="p-met-val" id="vpExpense">35.666.603 ₫</span>
+            </div>
+          </div>
+
+          <div class="pillar-net-box">
+            <span>Chi Phí Thuần Văn Phòng</span>
+            <div class="pillar-net-val color-bad" id="vpNet">-30.666.603 ₫</div>
+          </div>
+
+          <ul class="pillar-features">
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Nguyên tắc vàng SPEC.md</strong>: Không phân bổ chi phí VP vào 2 mảng kia.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Khoản mục cố định</strong>: Thuê mặt bằng, BHXH công ty đóng, điện nước, phí SMS/MBB.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span><strong>Doanh thu phụ</strong>: 5tr tiền cho thuê mặt bằng phòng lạnh (12-13/09).</span>
+            </li>
+          </ul>
+
+          <button onclick="switchEntryTab('chi')" class="btn btn-secondary" style="width:100%">
+            Ghi Chi Phí Văn Phòng ↓
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Chuyển Tiếp: Trung Tâm Tra Cứu & Báo Cáo Chuyên Sâu -->
+    <section class="portal-cta-section" id="more-reports">
+      <div class="portal-cta-card">
+        <div class="portal-cta-header">
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+            <span class="badge badge-gold">Phân Hệ Chuyên Sâu</span>
+            <span class="badge" style="background:var(--sunk);color:var(--ink-soft)">Trang 2 / 2</span>
+          </div>
+          <h3>🔍 Trung Tâm Tra Cứu Chứng Từ &amp; Báo Cáo Chuyên Sâu</h3>
+          <p>
+            Toàn bộ các phân hệ nghiệp vụ nâng cao đã được tách sang trang riêng biệt (<a href="tra-cuu.html" style="color:var(--gold);font-weight:600;text-decoration:underline">tra-cuu.html</a>) giúp Cổng Điều Hành luôn gọn gàng, tập trung tối đa vào chỉ số cốt lõi và thao tác nhập liệu hàng ngày:
+          </p>
+        </div>
+
+        <div class="cta-features-grid">
+          <a href="tra-cuu.html#explorer" class="cta-feature-pill">
+            <span class="icon">🔎</span>
+            <div>
+              <strong>Tra Cứu Giao Dịch &amp; Chứng Từ</strong>
+              <small>Tìm kiếm, bộ lọc 3 mảng, xóa dòng và xuất Excel (CSV)</small>
+            </div>
+          </a>
+
+          <a href="tra-cuu.html#alerts" class="cta-feature-pill">
+            <span class="icon">🚨</span>
+            <div>
+              <strong>Radar Giám Sát Rủi Ro &amp; Nghiệp Vụ</strong>
+              <small>38 giao dịch chưa khớp bank check &amp; dư tạm ứng</small>
+            </div>
+          </a>
+
+          <a href="tra-cuu.html#costs" class="cta-feature-pill">
+            <span class="icon">📊</span>
+            <div>
+              <strong>Cơ Cấu Chi Phí &amp; Phân Bổ Nguồn Tiền</strong>
+              <small>Tỷ trọng F&amp;B, Văn Phòng, Sơn Mài &amp; Tiền mặt vs Bank</small>
+            </div>
+          </a>
+
+          <a href="tra-cuu.html#sop" class="cta-feature-pill">
+            <span class="icon">📋</span>
+            <div>
+              <strong>Quy Trình Chuẩn Vận Hành (SOP)</strong>
+              <small>5 bước chuẩn hóa vận hành theo tài liệu SPEC.md</small>
+            </div>
+          </a>
+
+          <a href="tra-cuu.html#specs" class="cta-feature-pill">
+            <span class="icon">☁️</span>
+            <div>
+              <strong>Kiến Trúc Kỹ Thuật &amp; Lộ Trình Cloud</strong>
+              <small>Mô hình 4 Collection NoSQL &amp; Kế hoạch nâng cấp Backlog</small>
+            </div>
+          </a>
+        </div>
+
+        <div class="portal-cta-action">
+          <a href="tra-cuu.html" class="btn btn-primary" style="padding:14px 28px;font-size:1rem;border-radius:var(--radius-md);box-shadow:var(--shadow-md)">
+            Mở Trung Tâm Tra Cứu &amp; Báo Cáo Chuyên Sâu (tra-cuu.html) ➔
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="container footer-inner">
+      <div>
+        <p style="font-weight:600;color:var(--ink)">© 2026 CTY CP XÂY DỰNG THƯƠNG MẠI DU LỊCH HỒNG NGOC HÀ</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:2px">Hệ thống Quản trị Thu Chi &amp; Dòng Tiền Ba Mảng — Sơn Mài · F&amp;B · Văn Phòng</p>
+      </div>
+      <div class="footer-links">
+        <a href="tra-cuu.html" style="font-weight:600;color:var(--gold)">🔍 Tra Cứu &amp; Báo Cáo</a>
+        <span>·</span>
+        <a href="SPEC.md" target="_blank">Tài liệu SPEC.md</a>
+        <span>·</span>
+        <a href="#top">Lên đầu trang ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script with Real Business Data & Interactive Forms -->
+  <script>
+    // Embedded Initial Data (78 Records)
+    const initialSeed = [
+      {"id": 1, "date": "2026-09-03", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 1652789.0, "bank": 2142500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 2, "date": "2026-09-03", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 794711.0, "bank": 5375160.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26THH 0003123", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 3, "date": "2026-09-03", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 18150000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền chú Giang ứng cho cô Liên và chú Thành để mua NVL bếp", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 4, "date": "2026-09-04", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4062000.0, "bank": 3207500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 5, "date": "2026-09-04", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 588000.0, "bank": 1210000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26THS 00017923", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 6, "date": "2026-09-05", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 9179000.0, "bank": 4994500.0}, "Sơn Mài": {"cash": 0, "bank": 320000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Sacom - đã nhận 7/9", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 7, "date": "2026-09-05", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 1167000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 8, "date": "2026-09-06", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 5003000.0, "bank": 3787500.0}, "Sơn Mài": {"cash": 370000.0, "bank": 2370000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Vietcom - đã nhận 7/9", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 9, "date": "2026-09-06", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 382000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 10, "date": "2026-09-07", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 2880000.0, "bank": 1565000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 11, "date": "2026-09-07", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 452000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 12, "date": "2026-09-08", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 5406000.0, "bank": 5190800.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 13, "date": "2026-09-08", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 844000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 14, "date": "2026-09-09", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4347000.0, "bank": 4069000.0}, "Sơn Mài": {"cash": 316000.0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 15, "date": "2026-09-09", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 867000.0, "bank": 3500000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TGS 60", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 16, "date": "2026-09-09", "voucher": "PC260901\nPC260902", "type": "Cty tạm ứng NV", "alloc": {"F&B": {"cash": 25000000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tạm ứng tiền NVL bếp ăn cho Cô Liên & Chú Thành", "person": "Cô Liên / Chú Thành", "note": "", "invoiceStatus": ""},
+      {"id": 17, "date": "2026-09-10", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4821000.0, "bank": 3633500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 18, "date": "2026-09-10", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 786000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 19, "date": "2026-09-11", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 5779500.0, "bank": 6093500.0}, "Sơn Mài": {"cash": 0, "bank": 67591000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Sacom - đã nhận 4/9", "cashBalance": 0, "bankBalance": 0, "description": "Tiền quầy F&B + Thu tranh Sơn Mài đơn lớn Sacombank", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 20, "date": "2026-09-11", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 0, "bank": 1188000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TTD 00000054", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 21, "date": "2026-09-12", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 3652000.0, "bank": 7490500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt quầy bàn giao sau khi trừ tiền cafe cổ đông & mua NVL", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 22, "date": "2026-09-12", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 1601000.0, "bank": 6048000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ C26TGS 61", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 23, "date": "2026-09-12", "voucher": "GTT260901\nGTT260902", "type": "NV hoàn ứng Cty", "alloc": {"F&B": {"cash": 16527878.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mua NVL Bếp còn dư của chú Thành và cô Liên tính từ 3/9", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 24, "date": "2026-09-13", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 4444000.0, "bank": 5400000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 5000000.0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tiền quầy sau khi trừ chi phí + 5tr tiền cho thuê MB phòng lạnh", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 25, "date": "2026-09-13", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 426000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 31, "date": "2026-09-16", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 245000.0, "bank": 2507000.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 19513400.0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + HĐ 1C26TAA 00029035 + BHXH Văn phòng", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 33, "date": "2026-09-17", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 256400.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 11826000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TLG 132 Sơn Mài", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 36, "date": "2026-09-18", "voucher": "GTT260903\nGTT260904", "type": "NV hoàn ứng Cty", "alloc": {"F&B": {"cash": 4487326.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Hoàn tiền tạm ứng đợt 2", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 43, "date": "2026-09-21", "voucher": "PC260903", "type": "Cty tạm ứng NV", "alloc": {"F&B": {"cash": 15000000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tạm ứng tiền NVL cho cô Liên - bếp phó", "person": "Cô Liên", "note": "", "invoiceStatus": ""},
+      {"id": 50, "date": "2026-09-25", "voucher": "GTT260905\nGTT260906", "type": "NV hoàn ứng Cty", "alloc": {"F&B": {"cash": 5176726.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Hoàn tiền tạm ứng dư", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 59, "date": "2026-09-29", "voucher": "PC260904\nPC260905", "type": "Cty tạm ứng NV", "alloc": {"F&B": {"cash": 20000000.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Tạm ứng cho cô Liên 15tr, chú Thành 5tr", "person": "Cô Liên / Chú Thành", "note": "", "invoiceStatus": ""},
+      {"id": 64, "date": "2026-09-30", "voucher": "ĐNTT chị Hiền T.09", "type": "Cty hoàn ứng NV", "alloc": {"F&B": {"cash": 17262170.0, "bank": 0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Chốt số tiền Cty hoàn ứng cho chị Hiền tháng 09", "person": "Chị Hiền", "note": "", "invoiceStatus": ""},
+      {"id": 65, "date": "2026-10-01", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 3736500.0, "bank": 4174000.0}, "Sơn Mài": {"cash": 0, "bank": 13750000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Vietcom - đã nhận 2/10\nTechcom - đã nhận 1/10", "cashBalance": 0, "bankBalance": 0, "description": "Thu tiền F&B + Thu tranh Sơn Mài qua Vietcombank", "person": "Chị Hiền", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 66, "date": "2026-10-01", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 920000.0, "bank": 4331880.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 4637009.0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + NVL + HĐ 1C26THH 0003574 + Tiền điện VP", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 67, "date": "2026-10-02", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 6032000.0, "bank": 6865000.0}, "Sơn Mài": {"cash": 0, "bank": 1500000.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "TK chị Thanh", "cashBalance": 0, "bankBalance": 0, "description": "Bàn giao quầy F&B + Khách chuyển khoản cọc tranh Sơn Mài", "person": "", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 69, "date": "2026-10-03", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 3470500.0, "bank": 4305000.0}, "Sơn Mài": {"cash": 1200000.0, "bank": 1840750.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "Sacom - đã nhận 5/10", "cashBalance": 0, "bankBalance": 0, "description": "Tiền mặt - làm workshop Sơn Mài + Thu F&B", "person": "", "note": "", "invoiceStatus": "Đã XHD"},
+      {"id": 74, "date": "2026-10-05", "voucher": "", "type": "Chi", "alloc": {"F&B": {"cash": 265000.0, "bank": 3455995.0}, "Sơn Mài": {"cash": 0, "bank": 1440637.0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Cafe cổ đông + Mua NVL + HĐ 1C26TLT 00004641 + KPI Thành SM", "person": "", "note": "", "invoiceStatus": ""},
+      {"id": 77, "date": "2026-10-07", "voucher": "", "type": "Thu", "alloc": {"F&B": {"cash": 0, "bank": 4507500.0}, "Sơn Mài": {"cash": 0, "bank": 0}, "Văn phòng": {"cash": 0, "bank": 0}}, "bankCheck": "", "cashBalance": 0, "bankBalance": 0, "description": "Chuyển khoản tiền bán hàng F&B cuối kỳ", "person": "", "note": "", "invoiceStatus": "Đã XHD"}
+    ];
+
+    // Load data from LocalStorage if available to persist between page visits
+    let masterData = JSON.parse(localStorage.getItem("cashflow360_v2") || "null") || initialSeed;
+
+    // Format tiền VND chuẩn Việt Nam
+    const money = n => new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", maximumFractionDigits: 0 }).format(n || 0);
+    const num = n => Math.round(n || 0).toLocaleString("vi-VN") + " ₫";
+    const rawNum = str => Number(String(str || "").replace(/[^\d-]/g, "")) || 0;
+    const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
+
+    // Format input tiền trực tiếp khi gõ
+    function formatMoneyInput(el) {
+      const val = rawNum(el.value);
+      if (val === 0 && el.value.trim() === "") return;
+      el.value = Math.round(val).toLocaleString("vi-VN") + " ₫";
+    }
+
+    // Toast message popup
+    function showToast(msg, isSuccess = true) {
+      const container = document.getElementById("toastContainer");
+      const t = document.createElement("div");
+      t.className = "toast-msg";
+      t.style.borderLeft = isSuccess ? "4px solid var(--good)" : "4px solid var(--bad)";
+      t.innerHTML = `${isSuccess ? '✅' : '⚠️'} ${msg}`;
+      container.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateY(-10px)';
+        t.style.transition = 'all 0.3s ease';
+        setTimeout(() => t.remove(), 300);
+      }, 3200);
+    }
+
+    // Save Data to Storage and Refresh Views
+    function persistData() {
+      try {
+        localStorage.setItem("cashflow360_v2", JSON.stringify(masterData));
+      } catch (e) {
+        console.warn("Storage quota exceeded", e);
+      }
+      calculateStats();
+      renderRecentWidgets();
+    }
+
+    // State & Current Period
+    let currentPeriod = "all";
+
+    function getFilteredData() {
+      if (currentPeriod === "all") return masterData;
+      return masterData.filter(x => x.date.slice(0, 7) === currentPeriod);
+    }
+
+    // Tính toán số liệu thống kê & KPI
+    function calculateStats() {
+      const data = getFilteredData();
+      let thuTotal = 0, chiTotal = 0;
+      let fbThu = 0, fbChi = 0;
+      let smThu = 0, smChi = 0;
+      let vpThu = 0, vpChi = 0;
+      let cashThu = 0, bankThu = 0;
+      let cashChi = 0, bankChi = 0;
+      let unverifiedBank = 0;
+
+      data.forEach(x => {
+        const fbC = x.alloc?.['F&B']?.cash || 0, fbB = x.alloc?.['F&B']?.bank || 0;
+        const smC = x.alloc?.['Sơn Mài']?.cash || 0, smB = x.alloc?.['Sơn Mài']?.bank || 0;
+        const vpC = x.alloc?.['Văn phòng']?.cash || 0, vpB = x.alloc?.['Văn phòng']?.bank || 0;
+
+        const fb = fbC + fbB;
+        const sm = smC + smB;
+        const vp = vpC + vpB;
+        const cTotal = fbC + smC + vpC;
+        const bTotal = fbB + smB + vpB;
+
+        if (x.type === 'Thu') {
+          thuTotal += fb + sm + vp;
+          fbThu += fb; smThu += sm; vpThu += vp;
+          cashThu += cTotal; bankThu += bTotal;
+        } else if (x.type === 'Chi') {
+          chiTotal += fb + sm + vp;
+          fbChi += fb; smChi += sm; vpChi += vp;
+          cashChi += cTotal; bankChi += bTotal;
+        }
+
+        if (bTotal > 0 && !x.bankCheck) unverifiedBank++;
+      });
+
+      const netTotal = thuTotal - chiTotal;
+      const margin = thuTotal > 0 ? (netTotal / thuTotal * 100).toFixed(1) : "0.0";
+      const cashFund = cashThu - cashChi;
+      const bankFund = bankThu - bankChi;
+
+      // Update Header & Badge
+      const countEl = document.getElementById("txCountBadge");
+      if (countEl) countEl.textContent = masterData.length;
+
+      // Update UI KPI master
+      document.getElementById("valTotalThu").textContent = num(thuTotal);
+      document.getElementById("valTotalChi").textContent = num(chiTotal);
+      document.getElementById("valNetCashflow").textContent = (netTotal >= 0 ? "+" : "") + num(netTotal);
+      document.getElementById("subMargin").textContent = margin + "%";
+      document.getElementById("valLiquidity").textContent = `TM: ${Math.round(cashFund/1e6)}M · Bank: ${Math.round(bankFund/1e6)}M`;
+      document.getElementById("subCashFund").textContent = num(cashFund);
+      document.getElementById("subBankFund").textContent = num(bankFund);
+
+      const fnbPctThu = thuTotal ? (fbThu / thuTotal * 100).toFixed(1) : 0;
+      const smPctThu = thuTotal ? (smThu / thuTotal * 100).toFixed(1) : 0;
+      document.getElementById("subThuBreakdown").textContent = `F&B ${fnbPctThu}% · SM ${smPctThu}%`;
+      document.getElementById("subChiRatio").textContent = `Chi / Thu ${thuTotal ? (chiTotal/thuTotal*100).toFixed(1) : 0}%`;
+
+      // Segment Cards breakdown
+      document.getElementById("smRevenue").textContent = num(smThu);
+      document.getElementById("smExpense").textContent = num(smChi);
+      document.getElementById("smNet").textContent = (smThu - smChi >= 0 ? "+" : "") + num(smThu - smChi);
+
+      document.getElementById("fnbRevenue").textContent = num(fbThu);
+      document.getElementById("fnbExpense").textContent = num(fbChi);
+      document.getElementById("fnbNet").textContent = (fbThu - fbChi >= 0 ? "+" : "") + num(fbThu - fbChi);
+
+      document.getElementById("vpRevenue").textContent = num(vpThu);
+      document.getElementById("vpExpense").textContent = num(vpChi);
+      document.getElementById("vpNet").textContent = (vpThu - vpChi >= 0 ? "+" : "") + num(vpThu - vpChi);
+
+      // Input Hub Overviews
+      document.getElementById("smOverviewThu").textContent = num(smThu);
+      document.getElementById("smOverviewChi").textContent = num(smChi);
+      document.getElementById("smOverviewNet").textContent = num(smThu - smChi);
+
+      document.getElementById("fnbOverviewThu").textContent = num(fbThu);
+      document.getElementById("fnbOverviewChi").textContent = num(fbChi);
+      document.getElementById("fnbOverviewNet").textContent = num(fbThu - fbChi);
+
+      document.getElementById("chiOverviewFnb").textContent = num(fbChi);
+      document.getElementById("chiOverviewSm").textContent = num(smChi);
+      document.getElementById("chiOverviewVp").textContent = num(vpChi);
+    }
+
+    // Render Recent Transaction Snippets in Entry Cards
+    function renderRecentWidgets() {
+      const smRows = masterData.filter(x => (x.alloc?.['Sơn Mài']?.cash + x.alloc?.['Sơn Mài']?.bank) > 0).slice(0, 3);
+      document.getElementById("smRecentList").innerHTML = smRows.map(x => `
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--line-light);padding:4px 0">
+          <span>${x.date} · ${esc(x.description).slice(0, 24)}...</span>
+          <b style="color:var(--son)">${num(x.alloc['Sơn Mài'].cash + x.alloc['Sơn Mài'].bank)}</b>
+        </div>
+      `).join("") || '<div style="color:var(--muted)">Chưa có giao dịch.</div>';
+
+      const fnbRows = masterData.filter(x => (x.alloc?.['F&B']?.cash + x.alloc?.['F&B']?.bank) > 0).slice(0, 3);
+      document.getElementById("fnbRecentList").innerHTML = fnbRows.map(x => `
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--line-light);padding:4px 0">
+          <span>${x.date} · ${esc(x.description).slice(0, 24)}...</span>
+          <b style="color:var(--fnb)">${num(x.alloc['F&B'].cash + x.alloc['F&B'].bank)}</b>
+        </div>
+      `).join("") || '<div style="color:var(--muted)">Chưa có giao dịch.</div>';
+
+      const chiRows = masterData.filter(x => x.type === 'Chi').slice(0, 3);
+      document.getElementById("chiRecentList").innerHTML = chiRows.map(x => {
+        const tot = (x.alloc?.['F&B']?.cash + x.alloc?.['F&B']?.bank + x.alloc?.['Sơn Mài']?.cash + x.alloc?.['Sơn Mài']?.bank + x.alloc?.['Văn phòng']?.cash + x.alloc?.['Văn phòng']?.bank) || 0;
+        return `
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--line-light);padding:4px 0">
+          <span>${x.date} · ${esc(x.description).slice(0, 24)}...</span>
+          <b style="color:var(--bad)">${num(tot)}</b>
+        </div>`;
+      }).join("") || '<div style="color:var(--muted)">Chưa có khoản chi.</div>';
+    }
+
+    // ==========================================
+    // FORM HANDLERS FOR DATA ENTRY
+    // ==========================================
+
+    // 1. Lưu khoản thu Sơn Mài
+    function handleSaveSm(e) {
+      e.preventDefault();
+      const date = document.getElementById("smDate").value;
+      const src = document.getElementById("smSrc").value;
+      const content = document.getElementById("smContent").value.trim();
+      const amount = rawNum(document.getElementById("smAmount").value);
+      const invStatus = document.getElementById("smInvoiceStatus").value;
+      const invNum = document.getElementById("smInv").value.trim();
+      const bankCheck = document.getElementById("smBankCheck").value.trim();
+
+      if (!date || !content || amount <= 0) {
+        showToast("Vui lòng nhập ngày, nội dung và số tiền lớn hơn 0", false);
+        return;
+      }
+
+      const newTx = {
+        id: Date.now(),
+        date: date,
+        voucher: invNum ? `HĐ: ${invNum}` : "",
+        type: "Thu",
+        alloc: {
+          "F&B": { cash: 0, bank: 0 },
+          "Sơn Mài": {
+            cash: src === 'tm' ? amount : 0,
+            bank: src === 'ck' ? amount : 0
+          },
+          "Văn phòng": { cash: 0, bank: 0 }
+        },
+        bankCheck: bankCheck || (src === 'ck' ? "Sacom - đã nhận" : ""),
+        cashBalance: 0,
+        bankBalance: 0,
+        description: content,
+        person: "Khách Sơn Mài",
+        note: invNum ? `Hóa đơn: ${invNum}` : "",
+        invoiceStatus: invStatus
+      };
+
+      masterData.unshift(newTx);
+      persistData();
+      showToast(`Đã lưu khoản thu Sơn Mài: ${num(amount)}`);
+      document.getElementById("formSm").reset();
+      document.getElementById("smDate").value = new Date().toISOString().slice(0, 10);
+    }
+
+    // 2. Tính toán & Lưu F&B đối soát ngày
+    function calcFnbDiff() {
+      const kv = rawNum(document.getElementById("fnbKv").value);
+      const mbb = rawNum(document.getElementById("fnbMbb").value);
+      const cash = rawNum(document.getElementById("fnbCash").value);
+      const diff = kv - (mbb + cash);
+
+      const el = document.getElementById("fnbDiffVal");
+      if (diff === 0) {
+        el.textContent = "0 ₫ (Khớp)";
+        el.style.color = "var(--good)";
+      } else if (diff > 0) {
+        el.textContent = `+${num(diff)} (Thiếu tiền)`;
+        el.style.color = "var(--bad)";
+      } else {
+        el.textContent = `${num(diff)} (Thừa tiền)`;
+        el.style.color = "var(--warn)";
+      }
+    }
+
+    function handleSaveFnb(e) {
+      e.preventDefault();
+      const date = document.getElementById("fnbDate").value;
+      const person = document.getElementById("fnbPerson").value.trim() || "Chị Hiền";
+      const kv = rawNum(document.getElementById("fnbKv").value);
+      const mbb = rawNum(document.getElementById("fnbMbb").value);
+      const cash = rawNum(document.getElementById("fnbCash").value);
+      const note = document.getElementById("fnbNote").value.trim();
+
+      if (!date || kv <= 0) {
+        showToast("Vui lòng nhập ngày và doanh thu KiotViet", false);
+        return;
+      }
+
+      const diff = kv - (mbb + cash);
+      const desc = `Bàn giao tiền quầy F&B (KiotViet: ${num(kv)}) ${note ? '· ' + note : ''}`;
+
+      const newTx = {
+        id: Date.now(),
+        date: date,
+        voucher: "",
+        type: "Thu",
+        alloc: {
+          "F&B": { cash: cash, bank: mbb },
+          "Sơn Mài": { cash: 0, bank: 0 },
+          "Văn phòng": { cash: 0, bank: 0 }
+        },
+        bankCheck: mbb > 0 ? "MBB - đã nhận" : "",
+        cashBalance: 0,
+        bankBalance: 0,
+        description: desc,
+        person: person,
+        note: diff !== 0 ? `Chênh lệch: ${num(diff)}` : "Khớp doanh thu",
+        invoiceStatus: "Đã XHD"
+      };
+
+      masterData.unshift(newTx);
+      persistData();
+      showToast(`Đã lưu đối soát F&B ngày ${date}: ${num(mbb + cash)}`);
+      document.getElementById("formFnb").reset();
+      document.getElementById("fnbDate").value = new Date().toISOString().slice(0, 10);
+      calcFnbDiff();
+    }
+
+    // 3. Lưu khoản chi phí hoạt động
+    function handleSaveExpense(e) {
+      e.preventDefault();
+      const date = document.getElementById("chiDate").value;
+      const src = document.getElementById("chiSrc").value;
+      const seg = document.getElementById("chiSeg").value;
+      const cat = document.getElementById("chiCat").value;
+      const desc = document.getElementById("chiDesc").value.trim();
+      const amount = rawNum(document.getElementById("chiAmount").value);
+      const person = document.getElementById("chiPerson").value.trim();
+
+      if (!date || !desc || amount <= 0) {
+        showToast("Vui lòng nhập ngày, nội dung và số tiền chi hợp lệ", false);
+        return;
+      }
+
+      const segKey = seg === 'sm' ? 'Sơn Mài' : (seg === 'fnb' ? 'F&B' : 'Văn phòng');
+      const alloc = {
+        "F&B": { cash: 0, bank: 0 },
+        "Sơn Mài": { cash: 0, bank: 0 },
+        "Văn phòng": { cash: 0, bank: 0 }
+      };
+
+      alloc[segKey] = {
+        cash: src === 'tm' ? amount : 0,
+        bank: src === 'ck' ? amount : 0
+      };
+
+      const newTx = {
+        id: Date.now(),
+        date: date,
+        voucher: "",
+        type: "Chi",
+        alloc: alloc,
+        bankCheck: src === 'ck' ? "Đã đối chiếu" : "",
+        cashBalance: 0,
+        bankBalance: 0,
+        description: `[${cat}] ${desc}`,
+        person: person,
+        note: `Mảng: ${segKey}`,
+        invoiceStatus: ""
+      };
+
+      masterData.unshift(newTx);
+      persistData();
+      showToast(`Đã lưu khoản chi [${segKey}]: ${num(amount)}`);
+      document.getElementById("formChi").reset();
+      document.getElementById("chiDate").value = new Date().toISOString().slice(0, 10);
+    }
+
+    // 4. Phân tích & Dán sao kê MBB
+    let parsedPasteRows = [];
+
+    function parseDateStr(s) {
+      s = (s || "").trim();
+      let m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/);
+      if (m) return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+      m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      return m ? m[0] : null;
+    }
+
+    function parsePasteData() {
+      const text = document.getElementById("pasteInput").value;
+      if (!text.trim()) {
+        showToast("Vui lòng dán nội dung sao kê", false);
+        return;
+      }
+
+      parsedPasteRows = [];
+      const lines = text.split(/\r?\n/);
+
+      lines.forEach((line, idx) => {
+        if (!line.trim()) return;
+        const cols = line.split("\t");
+        const date = cols.map(parseDateStr).find(Boolean) || new Date().toISOString().slice(0, 10);
+        
+        let amt = 0;
+        let desc = "";
+
+        for (let i = cols.length - 1; i >= 0; i--) {
+          const n = rawNum(cols[i]);
+          if (n > 0 && !parseDateStr(cols[i])) {
+            amt = n;
+            break;
+          }
+        }
+
+        const remaining = cols.filter(c => !parseDateStr(c) && rawNum(c) !== amt);
+        desc = remaining.sort((a, b) => b.length - a.length)[0] || line;
+
+        const isSalary = /l[uư][oơ]ng/i.test(desc);
+        let defaultSeg = "Văn phòng";
+        if (/cafe|quầy|bếp|nvl.*fnb/i.test(desc)) defaultSeg = "F&B";
+        if (/sơn mài|tranh|workshop/i.test(desc)) defaultSeg = "Sơn Mài";
+
+        parsedPasteRows.push({
+          id: idx,
+          date: date,
+          desc: desc.trim(),
+          amount: amt,
+          seg: defaultSeg,
+          cat: isSalary ? "Lương" : "Khác",
+          selected: !isSalary
+        });
+      });
+
+      renderPastePreview();
+    }
+
+    function renderPastePreview() {
+      const area = document.getElementById("pastePreviewArea");
+      const tbody = document.getElementById("pastePreviewTbody");
+
+      if (!parsedPasteRows.length) {
+        area.hidden = true;
+        showToast("Không phân tích được dòng nào. Vui lòng kiểm tra định dạng Tab/Excel", false);
+        return;
+      }
+
+      area.hidden = false;
+      tbody.innerHTML = parsedPasteRows.map((r, i) => `
+        <tr>
+          <td><input type="checkbox" ${r.selected ? 'checked' : ''} onchange="parsedPasteRows[${i}].selected = this.checked"></td>
+          <td>${r.date}</td>
+          <td>${esc(r.desc)}</td>
+          <td style="text-align:right;font-weight:700">${num(r.amount)}</td>
+          <td>
+            <select onchange="parsedPasteRows[${i}].seg = this.value">
+              <option value="F&B" ${r.seg === 'F&B' ? 'selected' : ''}>F&B</option>
+              <option value="Sơn Mài" ${r.seg === 'Sơn Mài' ? 'selected' : ''}>Sơn Mài</option>
+              <option value="Văn phòng" ${r.seg === 'Văn phòng' ? 'selected' : ''}>Văn phòng</option>
+            </select>
+          </td>
+          <td>
+            <select onchange="parsedPasteRows[${i}].cat = this.value">
+              <option value="NVL / Hàng hóa" ${r.cat === 'NVL / Hàng hóa' ? 'selected' : ''}>NVL</option>
+              <option value="Thuê mặt bằng" ${r.cat === 'Thuê mặt bằng' ? 'selected' : ''}>Mặt bằng</option>
+              <option value="Điện nước" ${r.cat === 'Điện nước' ? 'selected' : ''}>Điện nước</option>
+              <option value="Phí ngân hàng" ${r.cat === 'Phí ngân hàng' ? 'selected' : ''}>Phí Bank</option>
+              <option value="Khác" ${r.cat === 'Khác' ? 'selected' : ''}>Khác</option>
+            </select>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function importBatchPasted() {
+      const selected = parsedPasteRows.filter(r => r.selected && r.amount > 0);
+      if (!selected.length) {
+        showToast("Chưa có dòng nào được chọn để nhập", false);
+        return;
+      }
+
+      selected.forEach(r => {
+        const alloc = {
+          "F&B": { cash: 0, bank: 0 },
+          "Sơn Mài": { cash: 0, bank: 0 },
+          "Văn phòng": { cash: 0, bank: 0 }
+        };
+        alloc[r.seg] = { cash: 0, bank: r.amount };
+
+        masterData.unshift({
+          id: Date.now() + Math.random(),
+          date: r.date,
+          voucher: "",
+          type: "Chi",
+          alloc: alloc,
+          bankCheck: "MBB - Sao kê",
+          cashBalance: 0,
+          bankBalance: 0,
+          description: `[${r.cat}] ${r.desc}`,
+          person: "",
+          note: `Nhập từ sao kê MBB`,
+          invoiceStatus: ""
+        });
+      });
+
+      persistData();
+      showToast(`Đã nhập thành công ${selected.length} dòng sao kê MBB!`);
+      document.getElementById("pasteInput").value = "";
+      document.getElementById("pastePreviewArea").hidden = true;
+      parsedPasteRows = [];
+    }
+
+    // Switch Tabs in Input Hub
+    function switchEntryTab(tabName) {
+      document.querySelectorAll("#entryTabs .hub-tab-btn").forEach(b => {
+        b.classList.toggle("active", b.dataset.tab === tabName);
+      });
+      document.querySelectorAll(".entry-panel").forEach(p => {
+        p.classList.toggle("active", p.id === `panel-${tabName}`);
+      });
+      const el = document.getElementById("input-hub");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    document.getElementById("entryTabs").addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      switchEntryTab(btn.dataset.tab);
+    });
+
+    // Period filter handler
+    document.getElementById("periodFilters").addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      document.querySelectorAll("#periodFilters button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentPeriod = btn.dataset.period;
+      calculateStats();
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById("themeToggle");
+    themeBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("portal_theme", next);
+    });
+    if (localStorage.getItem("portal_theme") === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+
+    // Set default dates
+    const todayStr = new Date().toISOString().slice(0, 10);
+    ["smDate", "fnbDate", "chiDate"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = todayStr;
+    });
+
+    // Initial setup
+    calculateStats();
+    renderRecentWidgets();
+  </script>
+</body>
+</html>
